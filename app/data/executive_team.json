@@ -1,0 +1,47 @@
+{
+  "chairperson": {
+    "name": "Kirenzi Christopher",
+    "photo_url": "https://res.cloudinary.com/dl5zh5l0q/image/upload/v1793717057/comfort_group/executive_team/chairperson_9b9694ae1712c1cd6b79c240.jpg",
+    "photo_public_id": "comfort_group/executive_team/chairperson_9b9694ae1712c1cd6b79c240"
+  },
+  "vice_chairperson": {
+    "name": "Wakaperi Noah",
+    "photo_url": "https://res.cloudinary.com/dl5zh5l0q/image/upload/v1793291114/comfort_group/executive_team/vice_chairperson_c36e0951da0965ba5cdefdd7.jpg",
+    "photo_public_id": "comfort_group/executive_team/vice_chairperson_c36e0951da0965ba5cdefdd7"
+  },
+  "treasurer": {
+    "name": "Gerlad Isabirye",
+    "photo_url": "https://res.cloudinary.com/dl5zh5l0q/image/upload/v1793290200/comfort_group/executive_team/treasurer_513618763b5e75eb24eadccb.jpg",
+    "photo_public_id": "comfort_group/executive_team/treasurer_513618763b5e75eb24eadccb"
+  },
+  "secretary": {
+    "name": "Mukisa Philly",
+    "photo_url": "https://res.cloudinary.com/dl5zh5l0q/image/upload/v1793716253/comfort_group/executive_team/secretary_4439f8be1a95436bd2a48e7a.jpg",
+    "photo_public_id": "comfort_group/executive_team/secretary_4439f8be1a95436bd2a48e7a"
+  },
+  "vice_secretary": {
+    "name": "Tumwesigye Charles",
+    "photo_url": "https://res.cloudinary.com/dl5zh5l0q/image/upload/v1793294297/comfort_group/executive_team/vice_secretary_cc447adde7bd7b2239da412f.jpg",
+    "photo_public_id": "comfort_group/executive_team/vice_secretary_cc447adde7bd7b2239da412f"
+  },
+  "publicity": {
+    "name": "Nambi Mercy",
+    "photo_url": "https://res.cloudinary.com/dl5zh5l0q/image/upload/v1793291346/comfort_group/executive_team/publicity_ec57bd2e0f52cd4def094beb.jpg",
+    "photo_public_id": "comfort_group/executive_team/publicity_ec57bd2e0f52cd4def094beb"
+  },
+  "welfare": {
+    "name": "",
+    "photo_url": "",
+    "photo_public_id": ""
+  },
+  "chief_mobilizer": {
+    "name": "Kaima John",
+    "photo_url": "https://res.cloudinary.com/dl5zh5l0q/image/upload/v1793716086/comfort_group/executive_team/chief_mobilizer_581bf141ab0fa73e26dfa22a.jpg",
+    "photo_public_id": "comfort_group/executive_team/chief_mobilizer_581bf141ab0fa73e26dfa22a"
+  },
+  "assistant_mobilizer": {
+    "name": "Mugoya Brian",
+    "photo_url": "https://res.cloudinary.com/dl5zh5l0q/image/upload/v1793937117/comfort_group/executive_team/assistant_mobilizer_f87313edc21401584bc6ac64.jpg",
+    "photo_public_id": "comfort_group/executive_team/assistant_mobilizer_f87313edc21401584bc6ac64"
+  }
+}

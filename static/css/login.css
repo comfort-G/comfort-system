@@ -1,0 +1,236 @@
+.main-content {
+    flex: 1 1 100%;
+    min-width: 0;
+    height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #f4f6f9;
+}
+
+.login-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) min(75vh, 56vw);
+    width: 100%;
+    min-height: 100%;
+}
+
+.login-panel {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: clamp(20px, 4vh, 48px);
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    text-align: left;
+}
+
+.login-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: clamp(18px, 3vh, 30px);
+}
+
+.login-logo-box {
+    display: grid;
+    flex: 0 0 auto;
+    width: clamp(84px, 14vh, 128px);
+    height: clamp(84px, 14vh, 128px);
+    margin: 0;
+    padding: 9px;
+    place-items: center;
+    border: 1px solid #e4e9ef;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(44, 62, 80, 0.09);
+    box-sizing: border-box;
+}
+
+.login-logo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.login-brand-name {
+    color: #2c3e50;
+    font-size: clamp(20px, calc(2.5vh + 2px), 26px);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.login-card h1 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: clamp(8px, 1.5vh, 14px);
+    text-align: left;
+    font-size: clamp(22px, 3vh, 28px);
+    font-weight: 700;
+}
+
+.login-subtitle {
+    margin: 0 0 clamp(20px, 3vh, 30px);
+    color: #667085;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.login-art {
+    min-width: 0;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #dff8f7;
+}
+
+.login-art img {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    object-fit: contain;
+    object-position: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="tel"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+#error-message {
+    margin-top: 15px;
+    color: #e74c3c;
+    text-align: left;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.forgot-password-toggle {
+    width: auto;
+    margin-top: 12px;
+    padding: 4px 0;
+    color: #2672a8;
+    background: transparent;
+    text-align: left;
+}
+
+.forgot-password-toggle:hover {
+    color: #1d5d8a;
+    background: transparent;
+    text-decoration: underline;
+}
+
+.forgot-password-panel {
+    margin-top: 18px;
+    padding: 18px;
+    border: 1px solid #dce5ed;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+
+.forgot-password-panel h2 {
+    margin: 0 0 8px;
+    color: #2c3e50;
+    font-size: 18px;
+}
+
+.forgot-password-panel p {
+    color: #667085;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.recovery-message {
+    margin: 12px 0 0;
+}
+
+@media (max-width: 760px) {
+    .main-content {
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+
+    .login-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .login-panel {
+        min-height: 100vh;
+        padding: 32px 24px;
+    }
+
+    .login-art {
+        display: none;
+    }
+}
+
+@media (max-height: 700px) and (min-width: 761px) {
+    .login-panel {
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+
+    .login-brand {
+        margin-bottom: 14px;
+    }
+
+    .login-logo-box {
+        width: clamp(72px, 13vh, 96px);
+        height: clamp(72px, 13vh, 96px);
+    }
+
+    .login-card h1 {
+        margin-bottom: 12px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+}

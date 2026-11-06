@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Audit Center - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/audit.css?v=20261031-audit-hero-1">
+{% endblock %}
+
+{% block content %}
+<main class="audit-center">
+    <header class="audit-header">
+        <div>
+            <p class="audit-eyebrow">Records &amp; accountability</p>
+            <h1>Audit Center</h1>
+            <p>Review administrative actions and welfare record history.</p>
+        </div>
+        <button type="button" class="audit-refresh-button" id="audit-refresh">Refresh Logs</button>
+    </header>
+
+    <section class="audit-panel audit-export-panel" aria-labelledby="audit-export-heading">
+        <div class="audit-panel-heading">
+            <div>
+                <h2 id="audit-export-heading">Download audit report</h2>
+                <p>Optionally export administrative and welfare audit records for a selected period as a PDF.</p>
+            </div>
+        </div>
+        <form id="audit-export-form" class="audit-export-form">
+            <label>
+                Start date
+                <input type="date" name="start_date" required>
+            </label>
+            <label>
+                End date
+                <input type="date" name="end_date" required>
+            </label>
+            <button type="submit" class="audit-refresh-button">Download PDF</button>
+        </form>
+        <p id="audit-export-error" class="audit-error" role="alert"></p>
+    </section>
+
+    <section class="audit-panel" aria-labelledby="admin-audit-heading">
+        <div class="audit-panel-heading">
+            <div>
+                <h2 id="admin-audit-heading">Administrative Actions</h2>
+                <p>Recent changes recorded across the system.</p>
+            </div>
+            <span class="audit-count" id="audit-log-count">Loading…</span>
+        </div>
+        <p id="audit-log-error" class="audit-error" role="alert"></p>
+        <div class="audit-table-scroll">
+            <table class="audit-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Date &amp; time</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Entity</th>
+                        <th scope="col">Actor</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Previous value</th>
+                        <th scope="col">New value</th>
+                    </tr>
+                </thead>
+                <tbody id="audit-log-body">
+                    <tr><td colspan="7" class="audit-empty">Loading audit logs…</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <button type="button" class="audit-more-button" id="audit-load-more" disabled>
+            Load older actions
+        </button>
+    </section>
+
+    <section class="audit-panel" aria-labelledby="welfare-audit-heading">
+        <div class="audit-panel-heading">
+            <div>
+                <h2 id="welfare-audit-heading">Welfare Audit History</h2>
+                <p>Actions recorded against welfare requests.</p>
+            </div>
+            <span class="audit-count" id="welfare-audit-count">Loading…</span>
+        </div>
+        <p id="welfare-audit-error" class="audit-error" role="alert"></p>
+        <div class="audit-table-scroll">
+            <table class="audit-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Date &amp; time</th>
+                        <th scope="col">Request</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Status change</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Payment reference</th>
+                        <th scope="col">IP address</th>
+                    </tr>
+                </thead>
+                <tbody id="welfare-audit-body">
+                    <tr><td colspan="8" class="audit-empty">Loading welfare audit logs…</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <button type="button" class="audit-more-button" id="welfare-audit-load-more" disabled>
+            Load older welfare actions
+        </button>
+    </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/audit.js?v=20261103-safe-api-json"></script>
+{% endblock %}

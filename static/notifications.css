@@ -1,0 +1,72 @@
+/* static/css/notifications.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    color: #333;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.notification-item {
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.notification-item.unread {
+    background: #ebf5fb;
+    border-left: 4px solid #3498db;
+}
+
+.notification-item.read {
+    background: #f8f9fa;
+    border-left: 4px solid #bdc3c7;
+}
+
+.notification-title {
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+    font-size: 16px;
+}
+
+.notification-message {
+    margin: 0 0 5px 0;
+    color: #555;
+    font-size: 14px;
+}
+
+.notification-time {
+    color: #95a5a6;
+    font-size: 12px;
+}
+
+button.btn-read {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+button.btn-read:hover {
+    background: #2980b9;
+}
+
+.badge-read {
+    color: #27ae60;
+    font-size: 12px;
+    font-weight: bold;
+}

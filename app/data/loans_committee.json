@@ -1,0 +1,17 @@
+{
+  "loans_officer": {
+    "name": "Mukisa Philly",
+    "photo_url": "https://res.cloudinary.com/dl5zh5l0q/image/upload/v1793939324/comfort_group/loans_committee/loans_officer_624257dab7f93181e73bd393.jpg",
+    "photo_public_id": "comfort_group/loans_committee/loans_officer_624257dab7f93181e73bd393"
+  },
+  "loans_member_1": {
+    "name": "Gerlad Isabirye",
+    "photo_url": "https://res.cloudinary.com/dl5zh5l0q/image/upload/v1793939465/comfort_group/loans_committee/loans_member_1_f017c1d996e486e5e4be7e81.jpg",
+    "photo_public_id": "comfort_group/loans_committee/loans_member_1_f017c1d996e486e5e4be7e81"
+  },
+  "loans_member_2": {
+    "name": "Mercy Nambi",
+    "photo_url": "https://res.cloudinary.com/dl5zh5l0q/image/upload/v1793939363/comfort_group/loans_committee/loans_member_2_d460fa1145842fea218a0d21.jpg",
+    "photo_public_id": "comfort_group/loans_committee/loans_member_2_d460fa1145842fea218a0d21"
+  }
+}

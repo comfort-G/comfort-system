@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Loan Reviews - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/loan_reviews.css">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Executive Loan Review Queue</h1>
+        <p style="color: #666;">Review and approve or reject pending member loan applications.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Loan ID</th>
+                    <th>Member ID</th>
+                    <th>Amount Requested (UGX)</th>
+                    <th>Purpose</th>
+                    <th>Applied Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="pending-loans-body">
+                <tr>
+                    <td colspan="6" style="text-align: center;">Loading pending loan queue...</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="message"></div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/loan_reviews.js?v=20261103-safe-api-json"></script>
+{% endblock %}

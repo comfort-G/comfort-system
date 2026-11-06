@@ -1,0 +1,164 @@
+.treasurer-reports {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    color: #23332d;
+}
+
+.reports-header,
+.reports-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.reports-header {
+    margin-bottom: 1.25rem;
+    padding: 1.5rem 1.75rem;
+    border-radius: 1rem;
+    color: #fff;
+    background: linear-gradient(120deg, #123b30, #1d684d);
+    box-shadow: 0 12px 30px rgba(21, 67, 49, 0.16);
+}
+
+.reports-header h1 {
+    margin: 0.15rem 0 0.5rem;
+    color: #fff;
+}
+
+.reports-eyebrow {
+    margin: 0;
+    color: #b8e3c9;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.reports-header > div:first-child > p:last-child {
+    margin-bottom: 0;
+    color: #e0efe6;
+}
+
+.reports-actions button,
+.reports-download {
+    display: inline-block;
+    padding: 0.65rem 0.9rem;
+    border: 0;
+    border-radius: 0.45rem;
+    background: #174c3c;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.reports-header .reports-actions button,
+.reports-header .reports-download {
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    color: #174432;
+    background: #f7fff9;
+}
+
+.reports-header .reports-actions button:hover,
+.reports-header .reports-download:hover {
+    background: #e9f8ee;
+}
+
+.reports-actions {
+    flex-wrap: wrap;
+}
+
+.member-summary-note {
+    margin: 0 0 1rem;
+    padding: 0.85rem 1rem;
+    border-left: 4px solid #2f7b5f;
+    border-radius: 0.35rem;
+    background: #f0f6f3;
+    color: #35564a;
+    line-height: 1.5;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 0.8rem;
+    margin: 1rem 0 1.5rem;
+}
+
+.summary-card,
+.report-panel {
+    border: 1px solid #dce6e1;
+    border-radius: 0.65rem;
+    background: #fff;
+    box-shadow: 0 2px 8px rgb(23 76 60 / 6%);
+}
+
+.summary-card {
+    padding: 1rem;
+}
+
+.summary-card span {
+    display: block;
+    color: #5a6e66;
+    font-size: 0.85rem;
+}
+
+.summary-card strong {
+    display: block;
+    margin-top: 0.45rem;
+    color: #174c3c;
+    font-size: 1.25rem;
+}
+
+.report-panel {
+    margin: 1rem 0;
+    padding: 1rem;
+}
+
+.report-panel h2 {
+    margin: 0 0 0.8rem;
+    color: #174c3c;
+    font-size: 1.1rem;
+}
+
+.report-table-wrap {
+    overflow: auto;
+}
+
+.report-panel table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.report-panel th,
+.report-panel td {
+    padding: 0.55rem;
+    border-bottom: 1px solid #e5ece8;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.report-panel th {
+    background: #f0f6f3;
+    color: #174c3c;
+}
+
+#reports-status[data-error="true"] {
+    color: #b42318;
+}
+
+@media (max-width: 700px) {
+    .treasurer-reports {
+        padding: 0.8rem;
+    }
+
+    .reports-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 1.25rem;
+    }
+}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Profile Settings - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/profile_settings.css?v=20261103-profile-hero">
+{% endblock %}
+
+{% block content %}
+<main class="profile-settings-page" data-must-change-password="{{ 'true' if must_change_password else 'false' }}">
+    <header class="profile-settings-hero">
+        <p class="profile-settings-eyebrow">Your account</p>
+        <h1>Profile Settings</h1>
+        <p>Keep your contact details current and manage your sign-in password.</p>
+    </header>
+
+    {% if must_change_password %}
+    <section class="profile-settings-notice" role="status">
+        Your account was created with a temporary password. Change it to continue to the member portal.
+    </section>
+    {% endif %}
+
+    <div class="profile-settings-grid">
+        <section class="profile-settings-card profile-photo-card" aria-labelledby="profile-photo-heading">
+            <h2 id="profile-photo-heading">Profile photo</h2>
+            <p class="profile-settings-help">Add a clear photo. It will appear in your home-page profile header.</p>
+            <div class="profile-photo-preview">
+                <img
+                    id="profile-photo-preview"
+                    src="{{ profile.avatar_url or '' }}"
+                    alt="Profile photo preview"
+                    {% if not profile.avatar_url %}hidden{% endif %}
+                >
+                <span id="profile-photo-placeholder" {% if profile.avatar_url %}hidden{% endif %}>
+                    {{ profile.full_name[:1] | upper if profile.full_name else '?' }}
+                </span>
+            </div>
+            <form id="member-photo-form">
+                <label for="profile-photo-file">Choose a photo</label>
+                <input
+                    id="profile-photo-file"
+                    name="image"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    required
+                >
+                <p class="profile-settings-help">JPEG, PNG, or WebP; maximum 5 MB.</p>
+                <button type="submit" class="profile-primary-button">Upload photo</button>
+            </form>
+            <p id="profile-photo-message" class="profile-settings-message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="profile-settings-card" aria-labelledby="profile-details-heading">
+            <h2 id="profile-details-heading">Profile details</h2>
+            <p class="profile-settings-help">
+                Your assigned Member ID and name are managed by an executive and cannot be changed here.
+            </p>
+            <form id="member-profile-form">
+                <label for="profile-member-id">Member ID</label>
+                <input id="profile-member-id" value="{{ profile.member_id }}" readonly>
+                <label for="profile-full-name">Full name</label>
+                <input id="profile-full-name" value="{{ profile.full_name }}" readonly>
+                <label for="profile-phone">Phone number</label>
+                <input id="profile-phone" name="phone" type="tel" maxlength="20" required value="{{ profile.phone or '' }}">
+                <label for="profile-email">Email</label>
+                <input id="profile-email" name="email" type="email" maxlength="254" required value="{{ profile.email or '' }}">
+                <label for="profile-address">Address</label>
+                <textarea id="profile-address" name="address" maxlength="500" rows="3">{{ profile.address or '' }}</textarea>
+                <label for="profile-occupation">Occupation</label>
+                <input id="profile-occupation" name="occupation" maxlength="120" value="{{ profile.occupation or '' }}">
+                <label for="profile-date-of-birth">Date of birth</label>
+                <input
+                    id="profile-date-of-birth"
+                    name="date_of_birth"
+                    type="date"
+                    max="{{ max_date }}"
+                    value="{{ profile.date_of_birth or '' }}"
+                >
+                <p class="profile-age" aria-live="polite">Age: <span id="profile-age">{{ profile_age if profile_age is not none else 'Not provided' }}</span></p>
+                <h3 class="profile-subheading">Next of kin</h3>
+                <label for="profile-next-of-kin-name">Full name</label>
+                <input id="profile-next-of-kin-name" name="next_of_kin_name" maxlength="120" value="{{ profile.next_of_kin_name or '' }}">
+                <label for="profile-next-of-kin-relationship">Relationship</label>
+                <input id="profile-next-of-kin-relationship" name="next_of_kin_relationship" maxlength="80" value="{{ profile.next_of_kin_relationship or '' }}">
+                <label for="profile-next-of-kin-phone">Phone number</label>
+                <input id="profile-next-of-kin-phone" name="next_of_kin_phone" type="tel" maxlength="20" value="{{ profile.next_of_kin_phone or '' }}">
+                <button type="submit" class="profile-primary-button">Save profile</button>
+            </form>
+            <p id="profile-details-message" class="profile-settings-message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="profile-settings-card" aria-labelledby="profile-password-heading">
+            <h2 id="profile-password-heading">Change password</h2>
+            <p class="profile-settings-help">Use at least 6 characters. Your current password is required.</p>
+            <form id="member-password-form">
+                <label for="current-password">Current password</label>
+                <input id="current-password" name="current_password" type="password" autocomplete="current-password" required>
+                <label for="new-password">New password</label>
+                <input id="new-password" name="new_password" type="password" autocomplete="new-password" minlength="6" maxlength="72" required>
+                <label for="confirm-password">Confirm new password</label>
+                <input id="confirm-password" name="confirm_password" type="password" autocomplete="new-password" minlength="6" maxlength="72" required>
+                <button type="submit" class="profile-primary-button">Change password</button>
+            </form>
+            <p id="profile-password-message" class="profile-settings-message" role="status" aria-live="polite"></p>
+        </section>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/profile_settings.js?v=20261103-safe-api-json"></script>
+{% endblock %}

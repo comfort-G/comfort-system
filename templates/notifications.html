@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Notifications & Reminders - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/notification.css?v=20261031-notifications-hero-1">
+{% endblock %}
+
+{% block content %}
+    <header class="notifications-hero" aria-labelledby="notifications-heading">
+        <p class="notifications-eyebrow">Updates for your group</p>
+        <h1 id="notifications-heading" class="notifications-heading">System Notifications &amp; Reminders</h1>
+        <p class="notifications-intro">Stay updated with subscription due dates, loan updates, and group announcements.</p>
+    </header>
+
+    <div class="notifications-card">
+        <div id="notifications-container">
+            <p class="notifications-empty">Loading notifications...</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/notifications.js?v=20261103-safe-api-json"></script>
+{% endblock %}

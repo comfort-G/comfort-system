@@ -1,0 +1,63 @@
+
+{% extends "base.html" %}
+
+{% block title %}Home Dashboard - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/index.css">
+{% endblock %}
+
+{% block content %}
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+        <h1 id="welcome-heading">Welcome back!</h1>
+        <p>Here is a quick snapshot of your financial status and group activities today.</p>
+        <div class="member-profile-summary" aria-label="Member profile summary">
+            <span>Member ID <strong id="profile-member-id">Loading...</strong></span>
+            <span>Role <strong id="profile-role">Loading...</strong></span>
+            <span>Account status <strong id="profile-account-status">Loading...</strong></span>
+            <span>Member status <strong id="profile-member-status">Loading...</strong></span>
+        </div>
+    </div>
+
+    <!-- Summary Stat Cards -->
+    <div class="stats-grid">
+        <div class="stat-card success">
+            <h3>Total Savings</h3>
+            <p class="stat-value" id="stat-savings">Loading...</p>
+        </div>
+        <div class="stat-card warning">
+            <h3>Active Loan Balance</h3>
+            <p class="stat-value" id="stat-loan">Loading...</p>
+        </div>
+        <div class="stat-card">
+            <h3>Welfare Tier</h3>
+            <p class="stat-value" id="stat-tier">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Quick Navigation Links -->
+    <h2 class="section-title">Quick Actions & Modules</h2>
+    <div class="quick-links">
+        <a href="/api/subscriptions/view" class="link-card">
+            <h4>Subscriptions & Ledger</h4>
+            <p>View your monthly payment history and submit new subscription records.</p>
+        </a>
+        <a href="/api/loans/view" class="link-card">
+            <h4>Loans Dashboard</h4>
+            <p>Apply for a loan, check active repayment schedules, and view loan history.</p>
+        </a>
+        <a href="/api/sharing/view" class="link-card">
+            <h4>Sharing & Dividends</h4>
+            <p>Inspect year-end interest breakdowns and request savings withdrawals.</p>
+        </a>
+        <a href="/api/admin/members/view" class="link-card">
+            <h4>Member Status Report</h4>
+            <p>Review group membership tiers, welfare payments, and debt statuses.</p>
+        </a>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/home.js?v=20261103-safe-api-json"></script>
+{% endblock %}

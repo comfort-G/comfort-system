@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Subscriptions - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/subscriptions.css?v=20261030-partial-dues-1">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <header class="subscriptions-hero">
+            <p class="subscriptions-hero-eyebrow">Your contributions · Your record</p>
+            <h1>Subscriptions &amp; Ledger</h1>
+            <p>Track your monthly contributions, current savings, and payment history in one place.</p>
+        </header>
+        
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="card">
+                <h3>Total Paid Contributions</h3>
+                <p>UGX <span id="total-paid">0.00</span></p>
+            </div>
+            <div class="card">
+                <h3>Current Savings Balance</h3>
+                <p>UGX <span id="current-savings">0.00</span></p>
+            </div>
+            <div class="card">
+                <h3>Subscription Arrears</h3>
+                <p>UGX <span id="subscription-arrears">0.00</span></p>
+                <small id="arrears-period">Loading central ledger balance...</small>
+            </div>
+            <div class="card" style="border-left-color: #e67e22;">
+                <h3>Pending Payment Proofs</h3>
+                <p id="pending-count">0</p>
+            </div>
+        </div>
+
+        <section class="subscription-payment" aria-labelledby="subscription-payment-title">
+            <div class="subscription-payment-brand">
+                <img src="/static/images/mtn.png" alt="MTN Mobile Money">
+            </div>
+            <div class="subscription-payment-details">
+                <p class="subscription-payment-eyebrow">Quick &amp; secure payment</p>
+                <h2 id="subscription-payment-title">Pay your subscription with MTN MoMo</h2>
+                <p>Use the MTN Mobile Money menu to pay your monthly subscription of <strong>UGX 20,000</strong>.</p>
+                <div class="subscription-merchant-code">
+                    <span>Merchant payment code</span>
+                    <strong>*165*3*09390032#</strong>
+                </div>
+                <a class="subscription-pay-button" href="tel:*165*3*09390032%23">
+                    Pay subscription
+                    <span aria-hidden="true">&rarr;</span>
+                </a>
+                <small class="subscription-payment-note">Your phone will open with the merchant code ready. Review the code and confirm the payment on your phone.</small>
+                <div class="subscription-proof-upload">
+                    <p class="subscription-proof-instructions">
+                        After paying, take a screenshot of the MTN transaction confirmation SMS and upload it here. The Treasurer will review and approve your proof.
+                    </p>
+                    <form id="payment-proof-form">
+                        <label for="payment-proof-file">Transaction SMS screenshot</label>
+                        <input
+                            id="payment-proof-file"
+                            name="image"
+                            type="file"
+                            accept="image/jpeg,image/png,image/webp"
+                            required
+                        >
+                        <small>JPG, PNG, or WebP · maximum 5 MB</small>
+                        <button class="subscription-proof-button" type="submit">Upload payment proof</button>
+                    </form>
+                    <p id="payment-proof-message" class="subscription-proof-message" role="status" aria-live="polite"></p>
+                </div>
+            </div>
+        </section>
+
+        <h2>Payment History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Billing Month</th>
+                    <th>Amount Paid (UGX)</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody id="ledger-table-body">
+                <tr>
+                    <td colspan="4" style="text-align: center;">Loading ledger history...</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="error-message"></div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/subscriptions.js?v=20261103-safe-api-json"></script>
+{% endblock %}

@@ -1,0 +1,142 @@
+/* static/css/sharing.css */
+.main-content {
+    color: #333;
+}
+
+.container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+.sharing-hero {
+    display: flex;
+    align-items: flex-end;
+    min-height: 270px;
+    margin-bottom: 24px;
+    padding: 32px;
+    overflow: hidden;
+    border-radius: 8px;
+    background:
+        linear-gradient(90deg, rgba(10, 30, 25, 0.86), rgba(10, 30, 25, 0.16)),
+        url("/static/images/sharing.png") center 48% / cover no-repeat;
+    color: #fff;
+}
+
+.sharing-hero-content {
+    max-width: 540px;
+}
+
+.sharing-hero-eyebrow {
+    margin: 0 0 8px;
+    color: #d7eee3;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.sharing-hero h1 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.1;
+}
+
+.sharing-hero-content > p:last-child {
+    margin: 14px 0 0;
+    color: #f3f7f5;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+h1, h2 {
+    color: #2c3e50;
+    margin-top: 0;
+}
+
+.card {
+    background: #ecf0f1;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border-left: 5px solid #3498db;
+}
+
+.alert-active {
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-locked {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+}
+
+button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+button.danger {
+    background: #e74c3c;
+}
+
+button.danger:hover {
+    background: #c0392b;
+}
+
+input[type="number"] {
+    padding: 10px;
+    width: 60%;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#message {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 18px;
+    }
+
+    .sharing-hero {
+        min-height: 230px;
+        padding: 24px;
+        background-position: 55% center;
+    }
+}

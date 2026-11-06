@@ -1,0 +1,180 @@
+/* static/css/admin_members.css */
+.main-content {
+    color: #333;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+h1, h2 {
+    color: #2c3e50;
+    margin-top: 0;
+}
+
+.card {
+    background: #ecf0f1;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    border-left: 5px solid #2980b9;
+}
+
+.announcement-admin-card h2 {
+    margin-bottom: 8px;
+}
+
+.announcement-admin-form {
+    display: grid;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.announcement-admin-form label {
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.announcement-admin-form input,
+.announcement-admin-form textarea {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    background: #fff;
+    font: inherit;
+}
+
+.announcement-admin-form textarea {
+    resize: vertical;
+}
+
+.announcement-admin-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+.announcement-admin-footer p {
+    margin: 0;
+    color: #52635b;
+    font-size: 13px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #2c3e50;
+    color: white;
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+.badge-full { background-color: #d4edda; color: #155724; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; }
+.badge-partial { background-color: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; }
+.badge-probation { background-color: #f8d7da; color: #721c24; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; }
+
+.member-status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    color: #fff;
+    font-weight: 750;
+    animation: member-status-pulse-green 1.8s infinite;
+}
+
+.member-status-indicator.is-active {
+    background: #16803c;
+    animation-name: member-status-pulse-green;
+}
+
+.member-status-indicator.is-inactive {
+    background: #c62828;
+    animation-name: member-status-pulse-red;
+}
+
+.member-status-indicator.is-unknown {
+    background: #667085;
+    animation: none;
+}
+
+.member-status-indicator-dot {
+    width: 9px;
+    height: 9px;
+    flex: 0 0 9px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+@keyframes member-status-pulse-green {
+    70% { box-shadow: 0 0 0 7px rgba(22, 128, 60, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(22, 128, 60, 0); }
+}
+
+@keyframes member-status-pulse-red {
+    70% { box-shadow: 0 0 0 7px rgba(198, 40, 40, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(198, 40, 40, 0); }
+}
+
+select {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+button {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+button:hover {
+    background: #219653;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#message {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .member-status-indicator {
+        animation: none;
+    }
+}

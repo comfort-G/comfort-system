@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/login.css?v=20261104-login-cleanup">
+{% endblock %}
+
+{% block sidebar %}{% endblock %}
+
+{% block content %}
+    <main class="login-layout">
+        <section class="login-panel" aria-labelledby="login-title">
+            <div class="login-card">
+                <div class="login-brand">
+                    <div class="login-logo-box">
+                        <img class="login-logo" src="/static/images/logo.png" alt="Comfort Group logo">
+                    </div>
+                    <span class="login-brand-name">Comfort Group</span>
+                </div>
+                <h1 id="login-title">Welcome back</h1>
+                <p class="login-subtitle">Sign in to your member portal.</p>
+                <form id="login-form" action="/api/auth/login" method="post">
+                    <div class="form-group">
+                        <label for="identifier">Member ID or Email</label>
+                        <input type="text" id="identifier" required placeholder="e.g. CBO-001" autocomplete="username">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required placeholder="Enter password" autocomplete="current-password">
+                    </div>
+
+                    <button type="submit">Sign In</button>
+                </form>
+                <div id="error-message" role="alert" aria-live="polite"></div>
+                <button type="button" class="forgot-password-toggle" id="forgot-password-toggle"
+                        aria-expanded="false" aria-controls="forgot-password-panel">
+                    Forgot Password?
+                </button>
+                <section id="forgot-password-panel" class="forgot-password-panel" hidden>
+                    <h2>Reset your password</h2>
+                    <p>Enter your Member ID or email address and we’ll email reset instructions if an account matches.</p>
+                    <form id="forgot-password-form">
+                        <div class="form-group">
+                            <label for="recovery-identifier">Member ID or Email</label>
+                            <input type="text" id="recovery-identifier" required maxlength="254"
+                                   autocomplete="username">
+                        </div>
+                        <button type="submit">Send reset instructions</button>
+                    </form>
+                    <p id="recovery-message" class="recovery-message" role="status" aria-live="polite"></p>
+                </section>
+            </div>
+        </section>
+        <aside class="login-art" aria-label="Comfort Group">
+            <img src="/static/images/home.jpeg" alt="Comfort Group community">
+        </aside>
+    </main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/login.js?v=20261105-password-reset-email"></script>
+{% endblock %}

@@ -1,0 +1,272 @@
+body {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.sheet-collapse-toggle {
+    display: flex;
+    width: 100%;
+    min-height: 46px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 8px;
+    padding: 11px 16px;
+    border: 1px solid #d5e5db;
+    border-left: 4px solid #2f8a5e;
+    border-radius: 10px;
+    color: #174c38;
+    background: linear-gradient(110deg, #f1f8f3, #fff 78%);
+    text-align: left;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 750;
+    cursor: pointer;
+    transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.sheet-collapse-toggle::after {
+    width: 9px;
+    height: 9px;
+    flex: 0 0 auto;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    content: "";
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform 160ms ease;
+}
+
+.sheet-collapse-toggle[aria-expanded="true"]::after {
+    transform: rotate(225deg) translateY(-2px);
+}
+
+.sheet-collapse-toggle:hover {
+    border-color: #9dcbb0;
+    color: #123f2e;
+    background: linear-gradient(110deg, #e8f5ec, #f9fcfa 78%);
+    box-shadow: 0 4px 12px rgba(30, 93, 60, 0.08);
+}
+
+.sheet-collapse-toggle:focus-visible {
+    outline: 3px solid rgba(44, 122, 95, 0.3);
+    outline-offset: 2px;
+}
+
+.collapsible-sheet-content[hidden] {
+    display: none !important;
+}
+
+.main-content {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.main-content p,
+.main-content li,
+.main-content label,
+.main-content input,
+.main-content select,
+.main-content textarea,
+.main-content button {
+    font-size: 15px;
+}
+
+.main-content table {
+    font-size: 14px;
+}
+
+.main-content th,
+.main-content td {
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.main-content .badge-full,
+.main-content .badge-partial,
+.main-content .badge-probation,
+.main-content .badge-paid,
+.main-content .badge-pending,
+.main-content .badge-approved,
+.main-content .badge-rejected {
+    font-size: 13px;
+}
+
+.sidebar-menu li a {
+    font-size: 16px;
+}
+
+.home-dashboard .eyebrow {
+    color: #52635b;
+    font-size: 12px;
+}
+
+.home-dashboard .identity-banner .eyebrow {
+    color: #d4e7df;
+}
+
+.home-dashboard .announcements-hero .eyebrow {
+    color: #b6dfcf;
+}
+
+.home-dashboard .identity-meta {
+    font-size: 14px;
+}
+
+.home-dashboard .activity-pill {
+    font-size: 13px;
+}
+
+.home-dashboard .identity-savings span,
+.home-dashboard .announcement-meta,
+.home-dashboard .announcements-hero .announcement-meta,
+.home-dashboard .desk-kicker,
+.home-dashboard .member-list-item span,
+.home-dashboard .member-list-item small,
+.home-dashboard .timeline-meta,
+.home-dashboard .global-metrics dt,
+.home-dashboard .data-note,
+.home-dashboard .table-caption,
+.home-dashboard .empty-state {
+    font-size: 12px;
+}
+
+.home-dashboard .desk-kicker {
+    color: #52635b;
+}
+
+.home-dashboard .announcement-content,
+.home-dashboard .history-item > p:not(.announcement-meta),
+.home-dashboard .home-expander,
+.home-dashboard .carousel-controls,
+.home-dashboard .desk-card > p,
+.home-dashboard .desk-stats dt,
+.home-dashboard .desk-stats dd,
+.home-dashboard .desk-link,
+.home-dashboard .membership-counts span,
+.home-dashboard .member-list-item strong,
+.home-dashboard .timeline-item strong,
+.home-dashboard .timeline-item p {
+    font-size: 14px;
+}
+
+.home-dashboard .global-metrics dd {
+    font-size: 15px;
+}
+
+.home-dashboard .global-financial-metrics dt {
+    font-size: 13px;
+}
+
+.home-dashboard .global-financial-metrics dd {
+    font-size: 18px;
+}
+
+.home-dashboard .global-running-loan-member {
+    font-size: 15px;
+}
+
+.home-dashboard .global-running-loan-reference,
+.home-dashboard .global-running-loan-summary-balance,
+.home-dashboard .global-running-loan-details dt,
+.home-dashboard .global-running-loan-details dd {
+    font-size: 13px;
+}
+
+.home-dashboard .borrower-panel th,
+.home-dashboard .borrower-panel td {
+    font-size: 13px;
+}
+
+.executive-actions-page .eyebrow,
+.executive-actions-page .action-message,
+.executive-actions-page .transfer-form label,
+.executive-actions-page .announcement-form label,
+.executive-actions-page .available-balance {
+    font-size: 14px;
+}
+
+.notification-date {
+    color: #667085;
+    font-size: 13px;
+}
+
+.sidebar-toggle {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    body {
+        display: block;
+        height: auto;
+        min-height: 100vh;
+        overflow: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .sidebar-navigation {
+        display: block;
+        overflow: visible;
+    }
+
+    .sidebar-header {
+        justify-content: space-between;
+    }
+
+    .sidebar-toggle {
+        display: flex;
+        flex: 0 0 42px;
+        width: 42px;
+        height: 42px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 8px;
+        border: 1px solid rgba(30, 58, 95, 0.35);
+        border-radius: 5px;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .sidebar-toggle span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        border-radius: 2px;
+        background: #1e3a5f;
+    }
+
+    body .sidebar:not(.is-open) .sidebar-menu {
+        display: none;
+    }
+
+    body .sidebar.is-open .sidebar-menu {
+        display: block;
+        max-height: calc(100dvh - 100px);
+        overflow-y: auto;
+    }
+
+    .main-content {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 17px 13px;
+        overflow: visible;
+    }
+
+    .sidebar-menu li a,
+    .sidebar-menu li .btn-logout {
+        font-size: 14px;
+    }
+
+    body:has(.home-dashboard) .sidebar-menu li a,
+    body:has(.home-dashboard) .sidebar-menu li .btn-logout {
+        font-size: 14px;
+    }
+}

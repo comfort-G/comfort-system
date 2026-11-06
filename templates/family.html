@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}Family Registry - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/family.css?v=20261106-family-hero-image">
+{% endblock %}
+
+{% block content %}
+<section class="family-registry">
+    <header class="family-hero" aria-labelledby="family-page-heading">
+        <div class="family-hero-copy">
+            <p class="family-hero-eyebrow">Comfort Group · Family &amp; care</p>
+            <h1 id="family-page-heading">Welcome to your Family Registry.</h1>
+            <p class="family-hero-description">
+                This is where you register the loved ones whose important life events may
+                qualify for Comfort Group welfare support. Add each eligible relative
+                carefully so your details can be reviewed and support can reach the right
+                person when your family needs it. When your registry is complete, submit it
+                to the Chairperson for review; after submission, only the Chairperson can
+                make changes.
+            </p>
+            <a class="family-hero-action" href="#family-entry">
+                Open your registry
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M4.5 10h11m-4.5-4.5L15.5 10 11 14.5"></path>
+                </svg>
+            </a>
+        </div>
+        <div class="family-hero-art" aria-hidden="true">
+            <div class="family-hero-orbit family-hero-orbit-one"></div>
+            <div class="family-hero-orbit family-hero-orbit-two"></div>
+            <div class="family-hero-connection family-hero-connection-one"></div>
+            <div class="family-hero-connection family-hero-connection-two"></div>
+            <div class="family-hero-connection family-hero-connection-three"></div>
+            <div class="family-hero-person family-hero-person-one">
+                <span class="family-hero-person-head"></span>
+                <span class="family-hero-person-body"></span>
+            </div>
+            <div class="family-hero-person family-hero-person-two">
+                <span class="family-hero-person-head"></span>
+                <span class="family-hero-person-body"></span>
+            </div>
+            <div class="family-hero-person family-hero-person-three">
+                <span class="family-hero-person-head"></span>
+                <span class="family-hero-person-body"></span>
+            </div>
+            <div class="family-hero-person family-hero-person-four">
+                <span class="family-hero-person-head"></span>
+                <span class="family-hero-person-body"></span>
+            </div>
+            <div class="family-hero-center">
+                <span class="family-hero-heart">
+                    <svg viewBox="0 0 32 32">
+                        <path d="M16 27s-11-6.7-11-14a6.3 6.3 0 0 1 11-4.2A6.3 6.3 0 0 1 27 13c0 7.3-11 14-11 14Z"></path>
+                    </svg>
+                </span>
+                <span class="family-hero-center-label">YOUR FAMILY</span>
+                <span class="family-hero-center-caption">Always connected</span>
+            </div>
+            <span class="family-hero-spark family-hero-spark-one"></span>
+            <span class="family-hero-spark family-hero-spark-two"></span>
+            <span class="family-hero-spark family-hero-spark-three"></span>
+        </div>
+    </header>
+
+    <section class="family-card" id="family-entry" aria-labelledby="family-form-heading">
+        <h2 id="family-form-heading">Add a Relative</h2>
+        <p class="family-welfare-guidance">
+            Illness and Death support can only be requested for eligible relatives listed
+            here. Both require the relative to be marked Alive. Only the Chairperson can
+            change vital status; once submitted, your registry is locked for you.
+        </p>
+        <form id="family-form">
+            <div class="family-form-grid">
+                <div class="family-form-group">
+                    <label for="relationship-type">Relationship</label>
+                    <input type="text" id="relationship-type" name="relationship_type"
+                           list="relationship-options" required maxlength="100"
+                           placeholder="e.g. Spouse">
+                    <datalist id="relationship-options">
+                        <option value="Spouse">
+                        <option value="Wife">
+                        <option value="Husband">
+                        <option value="Child">
+                        <option value="Son">
+                        <option value="Daughter">
+                        <option value="Parent">
+                        <option value="Mother">
+                        <option value="Father">
+                        <option value="Father-in-law">
+                        <option value="Mother-in-law">
+                        <option value="Sibling">
+                        <option value="Other">
+                    </datalist>
+                </div>
+                <div class="family-form-group">
+                    <label for="full-legal-name">Full legal name</label>
+                    <input type="text" id="full-legal-name" name="full_legal_name"
+                           required maxlength="200" autocomplete="name">
+                </div>
+                <div class="family-form-group">
+                    <label for="primary-contact">Primary contact</label>
+                    <input type="text" id="primary-contact" name="primary_contact"
+                           required maxlength="200" placeholder="Phone number or email">
+                </div>
+                <div class="family-form-group">
+                    <label for="vital-status">Vital status</label>
+                    <select id="vital-status" name="vital_status" required disabled>
+                        <option value="Alive">Alive</option>
+                        <option value="Deceased">Deceased</option>
+                    </select>
+                </div>
+            </div>
+            <div class="family-form-actions">
+                <button type="submit" id="family-submit-button">Add Relative</button>
+                <button type="button" id="family-cancel-edit" class="family-secondary-button" hidden>
+                    Cancel Edit
+                </button>
+            </div>
+            <p id="family-form-message" class="family-message" role="status" aria-live="polite"></p>
+        </form>
+    </section>
+
+    <section class="family-card" aria-labelledby="family-table-heading">
+        <h2 id="family-table-heading">Registered Relatives</h2>
+        <p id="family-registry-state" class="family-welfare-guidance" role="status" aria-live="polite">
+            Loading registry status...
+        </p>
+        <div class="family-table-wrap">
+            <table class="family-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Relationship</th>
+                        <th scope="col">Full legal name</th>
+                        <th scope="col">Primary contact</th>
+                        <th scope="col">Vital status</th>
+                        <th scope="col">Added</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="family-table-body">
+                    <tr><td colspan="6" class="family-empty-state">Loading family records...</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="family-form-actions">
+            <button type="button" id="family-submit-registry" hidden>
+                Finish and Submit Registry
+            </button>
+        </div>
+        <p id="family-list-message" class="family-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="family-card" id="family-executive-section"
+             aria-labelledby="family-executive-heading" hidden>
+        <h2 id="family-executive-heading">Executive Family Registry Review</h2>
+        <p class="family-welfare-guidance">
+            Executive members can view all registries. Only the Chairperson can edit
+            records, change vital status, or mark a submitted registry reviewed.
+        </p>
+        <div class="family-form-group">
+            <label for="family-executive-member-select">Select a member</label>
+            <select id="family-executive-member-select">
+                <option value="">Choose a member to review</option>
+            </select>
+        </div>
+        <div class="family-table-wrap">
+            <table class="family-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Member / Registry</th>
+                        <th scope="col">Relationship</th>
+                        <th scope="col">Relative name</th>
+                        <th scope="col">Primary contact</th>
+                        <th scope="col">Vital status</th>
+                        <th scope="col">Submission / review</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="family-executive-table-body">
+                    <tr><td colspan="7" class="family-empty-state">Loading registries...</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p id="family-executive-message" class="family-message" role="status" aria-live="polite"></p>
+    </section>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/family.js?v=20261103-safe-api-json"></script>
+{% endblock %}

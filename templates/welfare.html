@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}Welfare Support - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/welfare.css?v=20261105-welfare-eligibility">
+{% endblock %}
+
+{% block content %}
+    <div class="welfare-page">
+        <header class="welfare-hero" aria-labelledby="welfare-page-heading">
+            <div class="welfare-hero-copy">
+                <p class="welfare-hero-eyebrow">Comfort Group · Care when it matters</p>
+                <h1 id="welfare-page-heading">We’re here for life’s important moments.</h1>
+                <p class="welfare-hero-description">
+                    Welcome to Welfare Support. Submit a request for yourself or an eligible
+                    relative in your Family Registry, then follow its progress through review
+                    and disbursement.
+                </p>
+                <a class="welfare-hero-action" href="#welfare-claim">
+                    Start a welfare claim
+                    <svg viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M4.5 10h11m-4.5-4.5L15.5 10 11 14.5"></path>
+                    </svg>
+                </a>
+                <div class="welfare-hero-highlights" aria-label="Welfare support guidance">
+                    <span>Wedding &amp; introduction</span>
+                    <span>Illness &amp; death</span>
+                    <span>Track your claim</span>
+                </div>
+            </div>
+            <div class="welfare-hero-art" aria-hidden="true">
+                <span class="welfare-hero-ring welfare-hero-ring-one"></span>
+                <span class="welfare-hero-ring welfare-hero-ring-two"></span>
+                <div class="welfare-hero-emblem">
+                    <svg viewBox="0 0 120 120" focusable="false">
+                        <path class="welfare-heart" d="M60 91S24 69 24 44a20 20 0 0 1 36-12 20 20 0 0 1 36 12c0 25-36 47-36 47Z"></path>
+                        <path class="welfare-heart-line" d="M17 76h22l9-15 13 27 10-18 7 6h25"></path>
+                    </svg>
+                    <span>CARE &amp; SUPPORT</span>
+                </div>
+                <span class="welfare-hero-spark welfare-hero-spark-one"></span>
+                <span class="welfare-hero-spark welfare-hero-spark-two"></span>
+            </div>
+        </header>
+        <section class="welfare-guide" aria-labelledby="welfare-guide-heading">
+            <div class="welfare-guide-heading">
+                <p class="welfare-guide-eyebrow">Know what to expect</p>
+                <h2 id="welfare-guide-heading">Welfare support at a glance</h2>
+                <p>Check who qualifies and how your request is handled before submitting.</p>
+                <p class="welfare-eligibility-rule">
+                    To apply, you must be <strong>past probation</strong> and have a welfare balance
+                    of at least <strong>UGX 40,000</strong>.
+                </p>
+            </div>
+            <div class="welfare-guide-grid">
+                <article class="welfare-info-card welfare-info-card-wedding">
+                    <span class="welfare-info-icon" aria-hidden="true">01</span>
+                    <h3>Wedding &amp; introduction</h3>
+                    <p>Wedding and traditional introduction support is for the member only.</p>
+                </article>
+                <article class="welfare-info-card welfare-info-card-illness">
+                    <span class="welfare-info-icon" aria-hidden="true">02</span>
+                    <h3>Illness support</h3>
+                    <p>Eligible for the member or a <strong>registered spouse or child</strong> marked Alive.</p>
+                </article>
+                <article class="welfare-info-card welfare-info-card-death">
+                    <span class="welfare-info-icon" aria-hidden="true">03</span>
+                    <h3>Death support</h3>
+                    <p>Eligible for the member or a <strong>registered spouse, child, parent, or parent-in-law</strong> marked Alive.</p>
+                </article>
+                <article class="welfare-info-card welfare-info-card-wide">
+                    <span class="welfare-info-icon" aria-hidden="true">04</span>
+                    <h3>Review &amp; decision</h3>
+                    <p>Welfare staff or the Treasurer begin the review. The Chairperson approves or rejects the claim, then the Treasurer records any disbursement.</p>
+                </article>
+                <article class="welfare-info-card welfare-info-card-wide welfare-funding-card">
+                    <span class="welfare-info-icon" aria-hidden="true">05</span>
+                    <h3>How support is funded</h3>
+                    <p>Each disbursement assesses up to <strong>UGX 20,000 per eligible member</strong>, using welfare balances first and available savings next. Members who are on probation when a claim is submitted keep their balances and are exempt from that claim: they are not charged or given arrears for it, even after probation ends.</p>
+                </article>
+            </div>
+        </section>
+
+    <details class="card green welfare-claim" id="welfare-claim">
+        <summary class="welfare-claim-toggle">
+            <h2>Submit New Welfare Claim</h2>
+            <span class="welfare-claim-toggle-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="welfare-claim-content">
+            <form id="welfare-form">
+                <div class="form-group">
+                    <label for="support-category">Support event</label>
+                    <select id="support-category" required>
+                        <option value="">-- Select Category --</option>
+                        <option value="Wedding">Wedding ceremony</option>
+                        <option value="Traditional Introduction">Traditional introduction</option>
+                        <option value="Illness">Illness</option>
+                        <option value="Death">Death</option>
+                    </select>
+                </div>
+                <p class="welfare-field-help" id="welfare-eligibility-guidance" role="status" aria-live="polite">
+                    Eligibility is checked when you choose a support event.
+                </p>
+                <div class="form-group">
+                    <label for="beneficiary-id">Who is the support for?</label>
+                    <select id="beneficiary-id" required disabled>
+                        <option value="">Choose an event first</option>
+                    </select>
+                    <p class="welfare-field-help" id="beneficiary-guidance" role="status" aria-live="polite">
+                        Choose an event to see who is eligible.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description & Details</label>
+                    <textarea id="description" required placeholder="Describe the reason and circumstance for your claim..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="evidence-url">Evidence File URL (Optional)</label>
+                    <input type="text" id="evidence-url" placeholder="Paste Cloudinary or document link...">
+                </div>
+                <button type="submit" id="submit-welfare-claim" disabled>Submit Claim</button>
+            </form>
+            <div id="message"></div>
+        </div>
+    </details>
+
+    <!-- My Welfare Claims History Table -->
+    <div class="card">
+        <h2 style="margin-top: 0; color: #2c3e50;">My Welfare Claims History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Case #</th>
+                    <th>Support event</th>
+                    <th>For</th>
+                    <th>Description</th>
+                    <th>Stage</th>
+                    <th>Status</th>
+                    <th>Amount disbursed (UGX)</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="my-claims-body">
+                <tr><td colspan="8" style="text-align: center;">Loading your claims...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/welfare.js?v=20261105-welfare-eligibility"></script>
+{% endblock %}

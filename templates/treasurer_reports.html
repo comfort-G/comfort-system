@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Treasurer Finance Reports - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/treasurer_reports.css?v=20261031-reports-hero-1">
+{% endblock %}
+
+{% block content %}
+<main class="treasurer-reports">
+    <header class="reports-header">
+        <div>
+            <p class="reports-eyebrow">Treasurer, Chairperson, and Secretary - read only</p>
+            <h1>Finance Reports</h1>
+            <p>Reconcile subscriptions, loans, sharing, welfare funding, disbursements, and member balances.</p>
+        </div>
+        <div class="reports-actions">
+            <button type="button" id="reports-refresh">Refresh report</button>
+            <a class="reports-download" href="/api/treasurer-reports/pdf">Download PDF</a>
+            <a class="reports-download" href="/api/treasurer-reports/member-summary/pdf">
+                Download Member Summary PDF
+            </a>
+        </div>
+    </header>
+    <p class="member-summary-note">
+        The member summary lists paid contributions, welfare contributions and current
+        welfare balance, current savings, completed payouts, and each member's available
+        payout. It includes a totals row and is restricted to the Treasurer, Chairperson,
+        and Secretary.
+    </p>
+    <p id="reports-status" role="status" aria-live="polite"></p>
+    <p id="reports-generated"></p>
+    <section class="summary-grid" id="reports-summary" aria-label="Finance summary"></section>
+
+    <section class="report-panel">
+        <h2>Subscriptions ledger</h2>
+        <div class="report-table-wrap"><table><thead><tr>
+            <th>ID</th><th>Member</th><th>Name</th><th>Billing month</th><th>Amount</th><th>Status</th>
+        </tr></thead><tbody id="subscription-report"></tbody></table></div>
+    </section>
+    <section class="report-panel">
+        <h2>Subscription payment proofs and verification</h2>
+        <div class="report-table-wrap"><table><thead><tr>
+            <th>Proof</th><th>Member</th><th>Name</th><th>Month</th><th>Year</th>
+            <th>Amount</th><th>Method</th><th>Reference</th><th>Status</th>
+            <th>Uploaded</th><th>Verified by / date</th><th>Comment</th>
+        </tr></thead><tbody id="subscription-proofs-report"></tbody></table></div>
+    </section>
+    <section class="report-panel">
+        <h2>Loans and repayments</h2>
+        <div class="report-table-wrap"><table><thead><tr>
+            <th>Loan</th><th>Member</th><th>Name</th><th>Applied</th><th>Requested</th>
+            <th>Principal repaid</th><th>Interest repaid</th><th>Outstanding</th><th>Status</th>
+        </tr></thead><tbody id="loan-report"></tbody></table></div>
+    </section>
+    <section class="report-panel">
+        <h2>Loan repayment transactions</h2>
+        <div class="report-table-wrap"><table><thead><tr>
+            <th>Loan</th><th>Member</th><th>Name</th><th>Principal paid</th><th>Interest paid</th>
+        </tr></thead><tbody id="loan-repayments-report"></tbody></table></div>
+    </section>
+    <section class="report-panel">
+        <h2>Sharing and member payout balances</h2>
+        <div class="report-table-wrap"><table><thead><tr>
+            <th>Member</th><th>Name</th><th>Savings</th><th>Available savings</th>
+            <th>Borrower dividend</th><th>Group dividend</th><th>Withdrawn</th>
+            <th>Reserved</th><th>Available payout</th>
+        </tr></thead><tbody id="sharing-report"></tbody></table></div>
+    </section>
+    <section class="report-panel">
+        <h2>Sharing withdrawal transactions</h2>
+        <div class="report-table-wrap"><table><thead><tr>
+            <th>ID</th><th>Member</th><th>Name</th><th>Amount</th><th>Status</th>
+            <th>Requested</th><th>Approved by / date</th><th>Rejected by / date</th>
+            <th>Disbursed by / date</th><th>Review note</th>
+        </tr></thead><tbody id="sharing-withdrawal-report"></tbody></table></div>
+    </section>
+    <section class="report-panel">
+        <h2>Welfare requests and disbursements</h2>
+        <div class="report-table-wrap"><table><thead><tr>
+            <th>Case</th><th>Applicant</th><th>Category</th><th>Status / stage</th>
+            <th>Created</th><th>Target</th><th>Disbursed</th><th>Welfare used</th>
+            <th>Savings used</th><th>Member arrears</th><th>Payment reference</th>
+        </tr></thead><tbody id="welfare-report"></tbody></table></div>
+    </section>
+    <section class="report-panel">
+        <h2>Welfare disbursement transactions</h2>
+        <div class="report-table-wrap"><table><thead><tr>
+            <th>ID</th><th>Case</th><th>Applicant</th><th>Category</th><th>Target</th>
+            <th>Amount paid</th><th>Paid by</th><th>Role</th><th>Reference</th><th>Date</th>
+        </tr></thead><tbody id="welfare-disbursement-report"></tbody></table></div>
+    </section>
+    <section class="report-panel">
+        <h2>Personal welfare account balances</h2>
+        <div class="report-table-wrap"><table><thead><tr>
+            <th>Member</th><th>Name</th><th>Contributions received</th>
+            <th>Welfare allocated to requests</th><th>Arrears paid to requests</th>
+            <th>Current personal welfare balance</th>
+        </tr></thead><tbody id="welfare-balances-report"></tbody></table></div>
+    </section>
+    <section class="report-panel">
+        <h2>Welfare funding by member and request</h2>
+        <div class="report-table-wrap"><table><thead><tr>
+            <th>Case</th><th>Member</th><th>Name</th><th>Target</th>
+            <th>Welfare balance used</th><th>Savings used</th><th>Outstanding due</th>
+        </tr></thead><tbody id="welfare-contributors-report"></tbody></table></div>
+    </section>
+    <section class="report-panel">
+        <h2>Welfare contribution transfers</h2>
+        <div class="report-table-wrap"><table><thead><tr>
+            <th>ID</th><th>Reference</th><th>Member</th><th>Name</th><th>Amount</th>
+            <th>Recorded by</th><th>Role</th><th>Date</th>
+        </tr></thead><tbody id="welfare-transfer-report"></tbody></table></div>
+    </section>
+    <section class="report-panel">
+        <h2>Welfare arrears repayments</h2>
+        <div class="report-table-wrap"><table><thead><tr>
+            <th>ID</th><th>Reference</th><th>Case</th><th>Member</th><th>Name</th>
+            <th>Amount applied</th><th>Recorded by</th><th>Role</th><th>Date</th>
+        </tr></thead><tbody id="welfare-arrears-report"></tbody></table></div>
+    </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/treasurer_reports.js?v=20261103-safe-api-json"></script>
+{% endblock %}

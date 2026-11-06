@@ -1,0 +1,120 @@
+.notifications-hero {
+    margin: 0 0 24px;
+    padding: 28px 32px;
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(120deg, #123b30, #1d684d);
+    box-shadow: 0 12px 30px rgba(21, 67, 49, 0.16);
+}
+
+.notifications-eyebrow {
+    margin: 0 0 7px;
+    color: #b8e3c9;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.notifications-heading {
+    margin: 0 0 7px;
+    color: #fff;
+}
+
+.notifications-intro {
+    margin: 0;
+    color: #e0efe6;
+}
+
+.notifications-card {
+    padding: 25px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 12px;
+    padding: 15px;
+    border-left: 4px solid #bdc3c7;
+    border-radius: 6px;
+    background: #f8f9fa;
+}
+
+.notification-item:last-child {
+    margin-bottom: 0;
+}
+
+.notification-item.is-unread {
+    border-left-color: #3498db;
+    background: #ebf5fb;
+}
+
+.notification-content {
+    min-width: 0;
+}
+
+.notification-title {
+    margin: 0 0 5px;
+    color: #2c3e50;
+}
+
+.notification-message {
+    margin: 0 0 5px;
+    color: #555;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.notification-date {
+    color: #95a5a6;
+}
+
+.notification-actions {
+    flex: 0 0 auto;
+}
+
+.notification-read-button {
+    padding: 6px 12px;
+    border: 0;
+    border-radius: 4px;
+    background: #3498db;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.notification-read-button:hover {
+    background: #2980b9;
+}
+
+.notification-read-label {
+    color: #27ae60;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.notifications-empty {
+    margin: 0;
+    color: #7f8c8d;
+}
+
+@media (max-width: 600px) {
+    .notifications-hero {
+        padding: 24px;
+    }
+
+    .notifications-card {
+        padding: 18px;
+    }
+
+    .notification-item {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+}

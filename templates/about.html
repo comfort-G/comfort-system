@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block title %}About Us & Constitution Guide - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/about.css?v=20261106-loans-committee-inline-editor">
+{% endblock %}
+
+{% block content %}
+<main class="about-page" data-can-edit-team="{{ 'true' if can_edit_executive_team else 'false' }}">
+    <header class="about-hero">
+        <p class="about-eyebrow">Comfort Group · Member Guide</p>
+        <h1>About Us &amp; Constitution Guide</h1>
+        <p>A shared reference for our purpose, membership commitments, lending, welfare, and leadership.</p>
+    </header>
+
+    <section class="about-section" aria-labelledby="purpose-heading">
+        <div class="about-section-heading">
+            <p class="about-eyebrow">Who we are</p>
+            <h2 id="purpose-heading">Our purpose and aims</h2>
+        </div>
+        <div class="about-card-grid about-purpose-grid">
+            <article class="about-card">
+                <span class="about-card-icon" aria-hidden="true">01</span>
+                <h3>Our mission</h3>
+                <p>The Group's mission is to foster mutual support, collective well-being, and financial security among its members.</p>
+            </article>
+            <article class="about-card">
+                <span class="about-card-icon" aria-hidden="true">02</span>
+                <h3>Our objectives</h3>
+                <p>We promote financial discipline and collective saving while encouraging members to support one another.</p>
+            </article>
+            <article class="about-card">
+                <span class="about-card-icon" aria-hidden="true">03</span>
+                <h3>Our aims</h3>
+                <p>We aim to provide financial assistance and solidarity to members during both certainties and uncertainties.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="about-section" aria-labelledby="member-guide-heading">
+        <div class="about-section-heading">
+            <p class="about-eyebrow">Member reference</p>
+            <h2 id="member-guide-heading">Membership &amp; group rules</h2>
+            <p>Use these guide figures alongside the current constitution and decisions formally adopted by the group.</p>
+        </div>
+        <div class="about-card-grid about-guide-grid">
+            <article class="about-card guide-card">
+                <p class="guide-label">Joining fee</p>
+                <p class="guide-value">UGX 10,000</p>
+                <p>One-time membership fee.</p>
+            </article>
+            <article class="about-card guide-card">
+                <p class="guide-label">Monthly subscription</p>
+                <p class="guide-value">UGX 20,000</p>
+                <p>Regular monthly member contribution.</p>
+            </article>
+            <article class="about-card guide-card">
+                <p class="guide-label">Full membership</p>
+                <p class="guide-value">5 months · UGX 100,000</p>
+                <p>Five monthly contributions of UGX 20,000 complete the UGX 100,000 welfare contribution required for full membership.</p>
+            </article>
+            <article class="about-card guide-card">
+                <p class="guide-label">Loan limit</p>
+                <p class="guide-value">Up to 3× savings</p>
+                <p>Subject to eligibility and approval, with a current system application cap of UGX 300,000. Interest is capped at 10% per month.</p>
+            </article>
+        </div>
+        <div class="about-card-grid about-policy-grid">
+            <article class="about-card policy-card">
+                <h3>Welfare support</h3>
+                <div class="welfare-category">
+                    <span class="category-label certainty">Certainties</span>
+                    <div class="welfare-category-descriptions">
+                        <p>Wedding and traditional introduction support is for the member only.</p>
+                    </div>
+                </div>
+                <div class="welfare-category">
+                    <span class="category-label uncertainty">Uncertainties</span>
+                    <div class="welfare-category-descriptions">
+                        <p>Illness: member, or a registered spouse or child marked Alive.</p>
+                        <p>Death: member, or a registered spouse, child, parent, or parent-in-law marked Alive.</p>
+                        <p>Relatives must be registered before a claim is submitted. Executives still review every claim.</p>
+                    </div>
+                </div>
+            </article>
+            <article class="about-card policy-card">
+                <h3>Meeting fines</h3>
+                <p>Fine amounts and attendance rules are to be confirmed against the current constitution and committee decisions.</p>
+                <span class="policy-pending">Details pending confirmation</span>
+            </article>
+        </div>
+        <p class="about-disclaimer">If a figure or rule in this guide differs from the current constitution or a formally approved resolution, follow the governing document and confirmed group decision.</p>
+    </section>
+
+    <section class="about-section leadership-section" aria-labelledby="leadership-heading">
+        <div class="about-section-heading">
+            <p class="about-eyebrow">People &amp; service</p>
+            <h2 id="leadership-heading">Executive committee</h2>
+            <p>Meet the officers responsible for supporting the group and its members.</p>
+        </div>
+        <div class="leadership-grid">
+            {% for officer in executive_team if officer.key == 'chairperson' %}
+            <article class="leader-card leader-card-chairperson">
+                <div class="leader-photo">
+                    {% if officer.photo_url %}
+                    <img src="{{ officer.photo_url }}" alt="Profile photo of {{ officer.name or officer.office }}"
+                         loading="lazy" referrerpolicy="no-referrer">
+                    {% else %}
+                    <span aria-hidden="true">{{ officer.office[0] }}</span>
+                    {% endif %}
+                </div>
+                <div class="leader-details">
+                    <p class="leader-office">{{ officer.office }}</p>
+                    <h3>{{ officer.name or "Officer profile pending" }}</h3>
+                    <p>{{ officer.responsibilities }}</p>
+                </div>
+            </article>
+            {% endfor %}
+
+            {% for officer in executive_team if officer.key != 'chairperson' %}
+            <article class="leader-card">
+                <div class="leader-photo">
+                    {% if officer.photo_url %}
+                    <img src="{{ officer.photo_url }}" alt="Profile photo of {{ officer.name or officer.office }}"
+                         loading="lazy" referrerpolicy="no-referrer">
+                    {% else %}
+                    <span aria-hidden="true">{{ officer.office[0] }}</span>
+                    {% endif %}
+                </div>
+                <div class="leader-details">
+                    <p class="leader-office">{{ officer.office }}</p>
+                    <h3>{{ officer.name or "Officer profile pending" }}</h3>
+                    <p>{{ officer.responsibilities }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        {% if can_edit_executive_team %}
+        <details class="team-editor">
+            <summary class="team-editor-toggle">
+                <h3 id="team-editor-heading">
+                    <span class="about-eyebrow">Chairperson &amp; Secretary</span>
+                    <span>Update officer profiles</span>
+                </h3>
+                <span class="team-editor-toggle-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="team-editor-content">
+                <p class="team-editor-description">Update an officer name and upload a JPEG, PNG, or WebP profile photo (up to 5 MB). Images are stored securely in Cloudinary. Office titles and responsibilities are fixed.</p>
+                <div class="team-editor-grid">
+                    {% for officer in executive_team %}
+                    <form class="team-editor-form" data-office-key="{{ officer.key }}">
+                        <h4>{{ officer.office }}</h4>
+                        <label for="officer-name-{{ officer.key }}">Officer name</label>
+                        <input id="officer-name-{{ officer.key }}" name="name" type="text"
+                               maxlength="120" value="{{ officer.name }}" autocomplete="name">
+                        <label for="officer-photo-{{ officer.key }}">Upload profile photo</label>
+                        <input id="officer-photo-{{ officer.key }}" name="image" type="file"
+                               accept="image/jpeg,image/png,image/webp">
+                        {% if officer.photo_url %}
+                        <p class="team-editor-current-photo">A profile photo is currently saved. Upload a new image to replace it.</p>
+                        {% endif %}
+                        <button type="submit">Save {{ officer.office }}</button>
+                        <p class="team-editor-message" role="status" aria-live="polite"></p>
+                    </form>
+                    {% endfor %}
+                </div>
+            </div>
+        </details>
+        {% endif %}
+    </section>
+
+    <section class="about-section leadership-section" aria-labelledby="loans-committee-heading">
+        <div class="about-section-heading">
+            <p class="about-eyebrow">Lending &amp; service</p>
+            <h2 id="loans-committee-heading">Loans Committee</h2>
+            <p>The committee supports the group’s lending activities.</p>
+        </div>
+        <div class="leadership-grid">
+            {% if not loans_committee %}
+            <p class="team-editor-access-note">Loans Committee profiles are not loading. Restart or redeploy the app, then refresh this page.</p>
+            {% endif %}
+            {% for officer in loans_committee %}
+            <article class="leader-card{% if loop.first %} leader-card-chairperson{% endif %}">
+                <div class="leader-photo">
+                    {% if officer.photo_url %}
+                    <img src="{{ officer.photo_url }}" alt="Profile photo of {{ officer.name or officer.office }}"
+                         loading="lazy" referrerpolicy="no-referrer">
+                    {% else %}
+                    <span aria-hidden="true">{{ officer.office[0] }}</span>
+                    {% endif %}
+                </div>
+                <div class="leader-details">
+                    <p class="leader-office">{{ officer.office }} · {{ "Committee head" if loop.first else "Committee member" }}</p>
+                    <h3>{{ officer.name or "Name not added yet" }}</h3>
+                    {% if not officer.name and not officer.photo_url %}
+                    <p class="leader-profile-status">Profile details have not been entered.</p>
+                    {% endif %}
+                    <p>{{ officer.responsibilities }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+        {% if can_edit_executive_team %}
+        <details class="team-editor">
+            <summary class="team-editor-toggle">
+                <h3 id="loans-team-editor-heading">
+                    <span class="about-eyebrow">Loans Committee</span>
+                    <span>Edit committee profiles</span>
+                </h3>
+                <span class="team-editor-toggle-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="team-editor-content">
+                <p class="team-editor-description">Enter each member's name and optionally upload a JPEG, PNG, or WebP profile photo (up to 5 MB). The Loans Officer is the committee head; the remaining positions are members.</p>
+                <div class="team-editor-grid">
+                    {% if not loans_committee %}
+                    <p class="team-editor-access-note">No committee profiles were provided by the app. Restart or redeploy it to load the profile data and editor fields.</p>
+                    {% endif %}
+                    {% for officer in loans_committee %}
+                    <form class="team-editor-form" data-office-key="{{ officer.key }}" data-team-path="loans-committee">
+                        <h4>{{ officer.office }}{% if loop.first %} (Committee head){% endif %}</h4>
+                        <label for="loans-officer-name-{{ officer.key }}">Officer name</label>
+                        <input id="loans-officer-name-{{ officer.key }}" name="name" type="text"
+                               maxlength="120" value="{{ officer.name }}" autocomplete="name">
+                        <label for="loans-officer-photo-{{ officer.key }}">Upload profile photo</label>
+                        <input id="loans-officer-photo-{{ officer.key }}" name="image" type="file"
+                               accept="image/jpeg,image/png,image/webp">
+                        {% if officer.photo_url %}
+                        <p class="team-editor-current-photo">A profile photo is currently saved. Upload a new image to replace it.</p>
+                        {% endif %}
+                        <button type="submit">Save {{ officer.office }}</button>
+                        <p class="team-editor-message" role="status" aria-live="polite"></p>
+                    </form>
+                    {% endfor %}
+                </div>
+            </div>
+        </details>
+        {% else %}
+        <p class="team-editor-access-note">Committee names and photos can be updated by the Chairperson or Secretary using the Loans Committee profile editor.</p>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+{% if can_edit_executive_team %}
+<script src="/static/js/about.js?v=20261106-loans-committee-profiles"></script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="/static/manifest.json">
+    <title>{% block title %}Comfort Group Portal{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/sidebar.css?v=20261106-light-blue">
+    {% block extra_css %}{% endblock %}
+    <link rel="stylesheet" href="/static/css/readability.css?v=20261106-light-blue-sidebar">
+</head>
+<body>
+
+    {% block sidebar %}
+        <!-- Unified Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="sidebar-navigation">
+                <div class="sidebar-header">
+                    <img class="sidebar-logo" src="/static/images/logo.png" alt="Comfort Group logo">
+                    <strong class="sidebar-title">
+                        <span class="sidebar-title-main">Comfort Group</span>
+                        <span class="sidebar-title-system">System</span>
+                    </strong>
+                    <button class="sidebar-toggle" id="sidebar-toggle" type="button"
+                            aria-label="Open navigation menu" aria-controls="sidebar-menu" aria-expanded="false">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+                <ul class="sidebar-menu" id="sidebar-menu">
+                    <li><a href="/home" id="nav-home">Home Dashboard</a></li>
+                    <li><a href="/api/subscriptions/view" id="nav-subscriptions">Subscriptions & Ledger</a></li>
+                    <li><a href="/api/loans/view" id="nav-loans">Loans Dashboard</a></li>
+                    <li hidden><a href="/api/executive-actions/view" id="nav-executive-actions">Executive Action Center</a></li>
+                    <li><a href="/api/sharing/view" id="nav-sharing">Sharing & Dividends</a></li>
+                    <li><a href="/api/welfare/view" id="nav-welfare">Welfare Support</a></li>
+                    <li><a href="/api/notifications/view" id="nav-notifications">Notifications</a></li>
+                    <li><a href="/api/family/view" id="nav-family">Family Registry</a></li>
+                    <li><a href="/api/about/page" id="nav-about">About Us &amp; Constitution Guide</a></li>
+                    <li hidden><a href="/api/admin/members/profile" id="nav-member-profiles">Member Profiles</a></li>
+                    <li hidden><a href="/api/audit/view" id="nav-audit">Audit Center</a></li>
+                    <li hidden><a href="/api/treasurer-reports/view" id="nav-treasurer-reports">Treasurer Finance Reports</a></li>
+                    <li><a href="/my-details" id="nav-my-details">My Details</a></li>
+                    <li><a href="/api/profile/settings" id="nav-profile-settings">Profile Settings</a></li>
+                    <li><button class="btn-logout" id="logout-button" type="button">Logout</button></li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    <!-- Dynamic Main Content Wrapper -->
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="/static/js/base.js?v=20261103-safe-api-json"></script>
+    {% block extra_js %}{% endblock %}
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("/sw.js").catch((error) => {
+                    console.error("Service worker registration failed:", error);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

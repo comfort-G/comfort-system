@@ -1,0 +1,530 @@
+{% extends "base.html" %}
+
+{% block title %}Executive Action Center - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/executive_actions.css?v=20261104-status-color-pulse">
+{% endblock %}
+
+{% block content %}
+<main class="executive-actions-page"
+      data-can-override-members="{{ 'true' if can_override_members else 'false' }}"
+      data-can-suspend-members="{{ 'true' if can_override_members else 'false' }}"
+      data-can-approve-sharing="{{ 'true' if can_approve_sharing else 'false' }}"
+      data-can-disburse-sharing="{{ 'true' if can_disburse_sharing else 'false' }}"
+      data-can-manage-member-finances="{{ 'true' if can_manage_member_finances else 'false' }}"
+      data-can-emergency-reverse="{{ 'true' if can_emergency_reverse else 'false' }}"
+      data-monthly-subscription-target="{{ monthly_subscription_target }}">
+    <header class="actions-header">
+        <div class="actions-hero-content">
+            <p class="eyebrow">Comfort Group · Executive Office</p>
+            <h1>Executive Action Center</h1>
+            <p>Stewarding member services with clarity, accountability, and care.</p>
+            <span class="actions-hero-caption">Leadership &nbsp;·&nbsp; Oversight &nbsp;·&nbsp; Service</span>
+        </div>
+        <span class="actions-hero-mark" aria-hidden="true">CG</span>
+    </header>
+
+    <div id="actions-global-message" class="action-message" role="status" aria-live="polite"></div>
+
+    {% if can_manage_member_accounts %}
+    <section class="action-panel member-generator-panel" aria-labelledby="member-generator-heading">
+        <div class="action-panel-heading">
+            <div>
+                <p class="eyebrow">Chairperson / Secretary</p>
+                <h2 id="member-generator-heading">Direct Member Generator / Password Reset</h2>
+                <p class="panel-description">
+                    Create a member account or set a new temporary password. The member will be asked to change it after signing in.
+                </p>
+            </div>
+        </div>
+        <form id="member-generator-form" class="member-generator-form">
+            <label for="generator-member-id">Member ID</label>
+            <input id="generator-member-id" name="member_id" maxlength="50"
+                   placeholder="CBO-001" autocomplete="off" required>
+            <label for="generator-full-name">Full Name</label>
+            <input id="generator-full-name" name="full_name" maxlength="200" autocomplete="name" required>
+            <label for="generator-email">Email</label>
+            <input id="generator-email" name="email" type="email" maxlength="254" autocomplete="email" required>
+            <label for="generator-phone-number">Phone Number</label>
+            <input id="generator-phone-number" name="phone_number" type="tel" maxlength="20" autocomplete="tel" required>
+            <label for="generator-temporary-password">Temporary Password</label>
+            <input id="generator-temporary-password" name="raw_password" type="password"
+                   minlength="8" maxlength="72" autocomplete="new-password" required>
+            <button type="submit" class="primary-button" id="member-generator-submit">Save account</button>
+        </form>
+    </section>
+    {% endif %}
+
+    {% if can_emergency_reverse %}
+    <section class="emergency-reversal-panel" aria-labelledby="emergency-reversal-heading">
+        <div class="emergency-reversal-heading">
+            <p class="emergency-reversal-kicker">Chairperson / Treasurer · emergency use only</p>
+            <h2 id="emergency-reversal-heading">Reverse the latest financial action</h2>
+            <p>
+                Only the latest loan approval or welfare disbursement can be reversed, within 24 hours.
+                Confirm funds have physically returned before submitting. Reversals are permanent audit entries.
+            </p>
+            <button type="button" id="refresh-emergency-reversal" class="secondary-button">
+                Refresh latest action
+            </button>
+        </div>
+        <div id="emergency-reversal-action" class="emergency-reversal-action" aria-live="polite">
+            <p>Loading the latest financial action...</p>
+        </div>
+        <form id="emergency-reversal-form" class="emergency-reversal-form" hidden>
+            <label for="emergency-reversal-reason">Reason for reversal</label>
+            <textarea
+                id="emergency-reversal-reason"
+                name="reason"
+                minlength="8"
+                maxlength="500"
+                rows="3"
+                required></textarea>
+            <label class="emergency-reversal-confirmation">
+                <input id="emergency-reversal-funds-received" type="checkbox" required>
+                I confirm the full amount was physically received back into the group account.
+            </label>
+            <button type="submit" id="emergency-reversal-submit" class="emergency-reversal-button">
+                Reverse latest action
+            </button>
+        </form>
+        <p id="emergency-reversal-message" class="action-message" role="status" aria-live="polite"></p>
+    </section>
+    {% endif %}
+
+    {% if can_review_proofs %}
+    <section class="action-panel" aria-labelledby="proofs-heading">
+        <div class="action-panel-heading">
+            <div>
+                <p class="eyebrow">Treasurer / Chairperson</p>
+                <h2 id="proofs-heading">Subscription payment proofs</h2>
+            </div>
+            <button type="button" class="secondary-button" id="refresh-proofs">Refresh</button>
+        </div>
+        <p class="panel-description">
+            Carefully inspect each transaction screenshot and enter the exact amount shown.
+            Preview the month-by-month allocation before confirming; approval updates the ledger and savings.
+        </p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Member</th><th>Submitted</th><th>Verified amount (UGX)</th><th>Method / Ref</th><th>Proof</th><th>Review / allocation</th></tr></thead>
+                <tbody id="proof-queue">
+                    <tr><td colspan="6" class="empty-cell">Loading payment proofs...</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p id="proof-message" class="action-message" role="status" aria-live="polite"></p>
+    </section>
+    {% endif %}
+
+    {% if can_review_loans %}
+    <section class="action-panel" aria-labelledby="loans-heading">
+        <div class="action-panel-heading">
+            <div>
+                <p class="eyebrow">Chairperson / Treasurer / Secretary</p>
+                <h2 id="loans-heading">Pending loan applications</h2>
+                <p id="pending-loan-count" class="loan-queue-count" role="status" aria-live="polite">
+                    Applications remain pending until an executive reviews them.
+                </p>
+            </div>
+            <button type="button" class="secondary-button" id="refresh-loans">Refresh</button>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Loan</th><th>Member</th><th>Amount (UGX)</th><th>Mobile Money Number</th><th>Purpose</th><th>Applied</th><th>Action</th></tr></thead>
+                <tbody id="loan-queue">
+                    <tr><td colspan="7" class="empty-cell">Loading loan applications...</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p id="loan-message" class="action-message" role="status" aria-live="polite"></p>
+    </section>
+    {% endif %}
+
+    {% if can_moderate_welfare %}
+    <section class="action-panel" aria-labelledby="welfare-heading">
+        <div class="action-panel-heading">
+            <div>
+                <p class="eyebrow">Executive / Welfare</p>
+                <h2 id="welfare-heading">Welfare requests</h2>
+            </div>
+            <button type="button" class="secondary-button" id="refresh-welfare">Refresh</button>
+        </div>
+        <div class="table-wrap" id="welfare-queue-container" data-welfare-role="{{ welfare_role }}">
+            <table>
+                <thead><tr><th>Case</th><th>Member</th><th>Support event</th><th>For</th><th>Description</th><th>Stage</th><th>Disbursed (UGX)</th><th>Action</th></tr></thead>
+                <tbody id="welfare-queue">
+                    <tr><td colspan="8" class="empty-cell">Loading welfare requests...</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p id="welfare-message" class="action-message" role="status" aria-live="polite"></p>
+    </section>
+    {% endif %}
+
+    {% if can_transfer_subscriptions %}
+    <section class="action-panel" aria-labelledby="transfer-heading">
+        <div class="action-panel-heading">
+            <div>
+                <p class="eyebrow">Treasurer</p>
+                <h2 id="transfer-heading">Transfer savings to welfare / settle arrears</h2>
+            </div>
+            <button type="button" class="secondary-button" id="refresh-balances">Refresh balances</button>
+        </div>
+        <p class="panel-description">
+            Record a welfare contribution from a member’s available savings. Outstanding
+            welfare arrears are paid first, oldest request first; any remainder stays in the
+            member’s welfare balance. The transfer is audited and reduces savings available
+            for other transfers, sharing withdrawals, and future welfare deductions.
+        </p>
+        <form id="transfer-form" class="transfer-form">
+            <label for="transfer-member">Member</label>
+            <select id="transfer-member" required>
+                <option value="">Loading member balances...</option>
+            </select>
+            <label for="transfer-amount">Amount to transfer (UGX)</label>
+            <input id="transfer-amount" type="number" min="0.01" step="0.01" required>
+            <p id="transfer-available" class="available-balance">Available balance: UGX 0</p>
+            <button type="submit" class="primary-button">Transfer to welfare</button>
+        </form>
+        <p id="transfer-message" class="action-message" role="status" aria-live="polite"></p>
+    </section>
+    {% endif %}
+
+    {% if can_manage_member_finances %}
+    <section class="member-finance-suite" aria-labelledby="member-finance-heading">
+        <header class="member-finance-header">
+            <p class="member-finance-kicker">Treasurer only · audited account controls</p>
+            <h2 id="member-finance-heading">Member Finance Desk</h2>
+            <p>Post verified payments and manage member account corrections from one controlled ledger workspace.</p>
+            <div class="member-finance-principles">
+                <span>Every change updates the live account ledger</span>
+                <span>Members receive a notification</span>
+                <span>Every action is recorded in Audit Center</span>
+            </div>
+        </header>
+
+        <div class="member-finance-grid">
+            <section class="member-finance-card" aria-labelledby="manual-subscription-heading">
+                <p class="member-finance-card-label">Savings credit</p>
+                <h3 id="manual-subscription-heading">Manually record a subscription payment</h3>
+                <p>Enter the verified transaction total. The same month-by-month allocation is previewed before posting.</p>
+                <form id="manual-subscription-form" class="member-finance-form">
+                    <label for="manual-subscription-member">Member</label>
+                    <select id="manual-subscription-member" required>
+                        <option value="">Loading member accounts...</option>
+                    </select>
+                    <label for="manual-subscription-amount">Amount received (UGX)</label>
+                    <input id="manual-subscription-amount" type="number" min="0.01" step="0.01" required>
+                    <label for="manual-subscription-note">Reference or note <span>Optional</span></label>
+                    <input id="manual-subscription-note" type="text" maxlength="500" placeholder="Receipt or payment reference">
+                    <button type="submit" class="member-finance-primary">Preview allocation</button>
+                </form>
+                <div id="manual-subscription-preview" class="subscription-allocation-preview" hidden></div>
+                <p id="manual-subscription-message" class="action-message" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="member-finance-card" aria-labelledby="loan-installment-heading">
+                <p class="member-finance-card-label">Loan recovery</p>
+                <h3 id="loan-installment-heading">Post loan installment</h3>
+                <p>Installments settle outstanding interest first, then reduce principal.</p>
+                <form id="loan-installment-form" class="member-finance-form">
+                    <label for="installment-member">Member</label>
+                    <select id="installment-member" required>
+                        <option value="">Loading member accounts...</option>
+                    </select>
+                    <label for="installment-loan">Active loan</label>
+                    <select id="installment-loan" required disabled>
+                        <option value="">Select a member first</option>
+                    </select>
+                    <p id="installment-outstanding" class="member-finance-balance">Outstanding: UGX 0</p>
+                    <label for="installment-amount">Amount received (UGX)</label>
+                    <input id="installment-amount" type="number" min="0.01" step="0.01" required>
+                    <label for="installment-note">Reference or note <span>Optional</span></label>
+                    <input id="installment-note" type="text" maxlength="500" placeholder="Receipt or payment reference">
+                    <button type="submit" class="member-finance-primary">Post installment</button>
+                </form>
+                <p id="installment-message" class="action-message" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="member-finance-card historical-loan-card" aria-labelledby="historical-loan-heading">
+                <p class="member-finance-card-label">Historical records · Treasurer only</p>
+                <h3 id="historical-loan-heading">Add a loan from local books</h3>
+                <p>
+                    Enter the original principal, dated principal/interest payments, and any
+                    unpaid interest as of the balance date. The system calculates the current
+                    balance; it does not apply new-loan interest or record a new disbursement.
+                </p>
+                <form id="historical-loan-form" class="member-finance-form">
+                    <label for="historical-loan-member">Member</label>
+                    <select id="historical-loan-member" required>
+                        <option value="">Loading member accounts...</option>
+                    </select>
+                    <label for="historical-loan-reference">Local-book reference</label>
+                    <input id="historical-loan-reference" type="text" minlength="3" maxlength="120"
+                           placeholder="For example: ledger page 14 / loan entry 3" required>
+                    <label for="historical-loan-issued-date">Original issue date</label>
+                    <input id="historical-loan-issued-date" type="date" required>
+                    <label for="historical-loan-balance-date">Balance verified as of</label>
+                    <input id="historical-loan-balance-date" type="date" required>
+                    <label for="historical-loan-principal">Original principal (UGX)</label>
+                    <input id="historical-loan-principal" type="number" min="0.01" step="0.01" required>
+                    <label for="historical-loan-unpaid-interest">Interest still unpaid (UGX)</label>
+                    <input id="historical-loan-unpaid-interest" type="number" min="0" step="0.01" value="0" required>
+                    <label for="historical-loan-notes">Purpose or notes <span>Optional</span></label>
+                    <input id="historical-loan-notes" type="text" maxlength="500"
+                           placeholder="Optional context from the local books">
+                    <div class="historical-repayments-heading">
+                        <strong>Historical repayments</strong>
+                        <button type="button" class="member-finance-secondary" id="add-historical-repayment">
+                            Add repayment
+                        </button>
+                    </div>
+                    <p class="historical-loan-guidance">
+                        Add each payment once with its actual payment date and principal/interest
+                        split. Leave the table empty if no payments were made.
+                    </p>
+                    <div class="table-wrap historical-repayments-table">
+                        <table>
+                            <thead><tr>
+                                <th>Payment date</th><th>Principal paid (UGX)</th>
+                                <th>Interest paid (UGX)</th><th></th>
+                            </tr></thead>
+                            <tbody id="historical-loan-repayments"></tbody>
+                        </table>
+                    </div>
+                    <p id="historical-loan-balance-preview" class="member-finance-balance" aria-live="polite">
+                        Enter the principal and repayment details to preview the resulting balance.
+                    </p>
+                    <button type="submit" class="member-finance-primary">Validate and add historical loan</button>
+                </form>
+                <p id="historical-loan-message" class="action-message" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="member-finance-card member-finance-withdrawal" aria-labelledby="savings-withdrawal-heading">
+                <p class="member-finance-card-label">Chairperson approval required</p>
+                <h3 id="savings-withdrawal-heading">Request a savings withdrawal</h3>
+                <p>Funds are reserved while pending and only deducted after Chairperson approval.</p>
+                <form id="savings-withdrawal-form" class="member-finance-form">
+                    <label for="withdrawal-member">Member</label>
+                    <select id="withdrawal-member" required>
+                        <option value="">Loading member accounts...</option>
+                    </select>
+                    <p id="withdrawal-available" class="member-finance-balance">Available savings: UGX 0</p>
+                    <label for="withdrawal-amount">Amount to withdraw (UGX)</label>
+                    <input id="withdrawal-amount" type="number" min="0.01" step="0.01" required>
+                    <label for="withdrawal-reason">Reason</label>
+                    <textarea id="withdrawal-reason" rows="3" maxlength="500" required></textarea>
+                    <button type="submit" class="member-finance-secondary">Send for approval</button>
+                </form>
+                <p id="withdrawal-message" class="action-message" role="status" aria-live="polite"></p>
+            </section>
+        </div>
+
+        <section class="member-finance-ledger" aria-labelledby="subscription-ledger-heading">
+            <div class="member-finance-ledger-heading">
+                <div>
+                    <p class="member-finance-card-label">Recent account entries</p>
+                    <h3 id="subscription-ledger-heading">Paid subscription ledger</h3>
+                </div>
+                <button type="button" class="member-finance-refresh" id="refresh-member-finances">Refresh ledger</button>
+            </div>
+            <p class="member-finance-ledger-note">Incorrect entries can be permanently removed. The correction remains in the audit history and the member is notified.</p>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Member</th><th>Billing month</th><th>Paid (UGX)</th><th>Status</th><th>Correction</th></tr></thead>
+                    <tbody id="manual-subscription-ledger">
+                        <tr><td colspan="5" class="empty-cell">Loading subscription ledger...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="member-finance-ledger" aria-labelledby="welfare-transfer-ledger-heading">
+            <div class="member-finance-ledger-heading">
+                <div>
+                    <p class="member-finance-card-label">Welfare account entries</p>
+                    <h3 id="welfare-transfer-ledger-heading">Welfare transfers</h3>
+                </div>
+            </div>
+            <p class="member-finance-ledger-note">Removing a transfer also reverses arrears payments linked to that transfer, then updates the welfare balance and notifies the member.</p>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Member</th><th>Recorded</th><th>Transfer (UGX)</th><th>Arrears paid (UGX)</th><th>Reference</th><th>Correction</th></tr></thead>
+                    <tbody id="welfare-transfer-ledger">
+                        <tr><td colspan="6" class="empty-cell">Loading welfare transfers...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="member-finance-ledger" aria-labelledby="loan-repayment-ledger-heading">
+            <div class="member-finance-ledger-heading">
+                <div>
+                    <p class="member-finance-card-label">Loan account entries</p>
+                    <h3 id="loan-repayment-ledger-heading">Loan installments</h3>
+                </div>
+            </div>
+            <p class="member-finance-ledger-note">Removing an installment restores its principal and interest to the outstanding loan and reopens a paid loan when needed.</p>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Member</th><th>Loan</th><th>Payment date</th><th>Principal (UGX)</th><th>Interest (UGX)</th><th>Recorded by</th><th>Correction</th></tr></thead>
+                    <tbody id="loan-repayment-ledger">
+                        <tr><td colspan="7" class="empty-cell">Loading loan installments...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="member-finance-ledger" aria-labelledby="historical-loan-ledger-heading">
+            <div class="member-finance-ledger-heading">
+                <div>
+                    <p class="member-finance-card-label">Historical import register</p>
+                    <h3 id="historical-loan-ledger-heading">Imported local-book loans</h3>
+                </div>
+            </div>
+            <p class="member-finance-ledger-note">
+                An import can be voided with a reason if no later system repayment has been
+                recorded. The correction stays in the audit history; voiding is a ledger
+                correction, not a cash reversal.
+            </p>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr>
+                        <th>Member</th><th>Loan</th><th>Source reference</th>
+                        <th>Issued</th><th>Balance as of</th><th>Principal (UGX)</th>
+                        <th>Outstanding (UGX)</th><th>Status</th><th>Correction</th>
+                    </tr></thead>
+                    <tbody id="historical-loan-ledger">
+                        <tr><td colspan="9" class="empty-cell">Loading historical loan imports...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+    {% endif %}
+
+    {% if can_review_member_withdrawals %}
+    <section class="member-withdrawal-review" aria-labelledby="member-withdrawal-review-heading">
+        <div class="member-withdrawal-review-heading">
+            <div>
+                <p class="member-withdrawal-review-kicker">Chairperson decision · savings account</p>
+                <h2 id="member-withdrawal-review-heading">Member withdrawal approvals</h2>
+                <p>Approve to deduct from savings, or reject to release the reserved amount.</p>
+            </div>
+            <button type="button" class="member-finance-refresh" id="refresh-member-withdrawals">Refresh requests</button>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Member</th><th>Amount (UGX)</th><th>Available (UGX)</th><th>Reason</th><th>Requested by</th><th>Action</th></tr></thead>
+                <tbody id="member-withdrawal-queue">
+                    <tr><td colspan="6" class="empty-cell">Loading withdrawal requests...</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p id="member-withdrawal-message" class="action-message" role="status" aria-live="polite"></p>
+    </section>
+    {% endif %}
+
+    {% if can_publish_announcements %}
+    <section class="action-panel" aria-labelledby="announcement-heading">
+        <p class="eyebrow">Chairperson / Secretary</p>
+        <h2 id="announcement-heading">Publish an announcement</h2>
+        <form id="announcement-form" class="announcement-form">
+            <label for="announcement-title">Title</label>
+            <input id="announcement-title" name="title" maxlength="160" required>
+            <label for="announcement-content">Message</label>
+            <textarea id="announcement-content" name="content" rows="4" maxlength="5000" required></textarea>
+            <button type="submit" class="primary-button">Publish announcement</button>
+        </form>
+        <p id="announcement-message" class="action-message" role="status" aria-live="polite"></p>
+    </section>
+    {% endif %}
+
+    {% if can_manage_home_gallery %}
+    <section class="action-panel" aria-labelledby="gallery-heading">
+        <p class="eyebrow">Chairperson / Secretary</p>
+        <h2 id="gallery-heading">Manage Home Dashboard gallery</h2>
+        <p class="panel-description">
+            Image files are kept in Cloudinary; the database stores their links and upload details.
+            Store up to 100 images. JPEG, PNG, and WebP files up to 5 MB each are accepted.
+            The Home Dashboard shows up to 10 images at a time; members can view all images there.
+        </p>
+        <p id="gallery-count" class="panel-description" aria-live="polite"></p>
+        <div id="home-gallery-slots" class="home-gallery-slots" aria-live="polite">
+            <p>Loading gallery images...</p>
+        </div>
+        <p id="gallery-message" class="action-message" role="status" aria-live="polite"></p>
+    </section>
+    {% endif %}
+
+    {% if can_toggle_sharing %}
+    <section class="action-panel compact-panel" aria-labelledby="sharing-heading">
+        <div>
+            <p class="eyebrow">Chairperson</p>
+            <h2 id="sharing-heading">Year-end sharing cycle</h2>
+            <p id="sharing-state">Loading sharing cycle status...</p>
+        </div>
+        <button type="button" class="primary-button" id="toggle-sharing">Loading...</button>
+        <p id="sharing-message" class="action-message" role="status" aria-live="polite"></p>
+    </section>
+    {% endif %}
+
+    {% if can_approve_sharing or can_disburse_sharing %}
+    <section class="action-panel" aria-labelledby="sharing-withdrawals-heading">
+        <div class="action-panel-heading">
+            <div>
+                <p class="eyebrow">Chairperson review / Treasurer disbursement</p>
+                <h2 id="sharing-withdrawals-heading">Sharing withdrawal requests</h2>
+            </div>
+            <button type="button" class="secondary-button" id="refresh-sharing-withdrawals">Refresh</button>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th>Request</th><th>Member</th><th>Amount (UGX)</th><th>Status</th><th>Requested</th><th>Action</th></tr>
+                </thead>
+                <tbody id="sharing-withdrawal-queue">
+                    <tr><td colspan="6" class="empty-cell">Loading sharing withdrawal requests...</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p id="sharing-withdrawals-message" class="action-message" role="status" aria-live="polite"></p>
+    </section>
+    {% endif %}
+
+    {% if can_manage_members %}
+    <section class="action-panel" aria-labelledby="members-heading">
+        <div class="action-panel-heading">
+            <div>
+                <p class="eyebrow">Chairperson / Treasurer / Secretary</p>
+                <h2 id="members-heading">Member status, account access, and overrides</h2>
+                <p class="panel-description">Suspended accounts are locked from signing in, transactions, and member payouts. Red rows are suspended; only the Chairperson can suspend or restore an account.</p>
+            </div>
+            <div class="panel-actions">
+                <button type="button" class="secondary-button" id="refresh-members">Refresh</button>
+                <button type="button" class="secondary-button collapse-toggle" id="member-status-toggle" aria-expanded="true">Collapse</button>
+            </div>
+        </div>
+        <div id="member-status-panel" class="collapsible-content">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Member</th><th>Days in group</th><th>Welfare paid (UGX)</th><th>Welfare balance (UGX)</th><th>Membership tier</th><th>Subscription arrears</th><th>Final status</th><th>Chairperson override</th><th>Account access</th></tr>
+                    </thead>
+                    <tbody id="member-status-queue">
+                        <tr><td colspan="9" class="empty-cell">Loading member status report...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p id="member-message" class="action-message" role="status" aria-live="polite"></p>
+        </div>
+    </section>
+    {% endif %}
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/executive_actions.js?v=20261104-status-color-pulse"></script>
+{% endblock %}

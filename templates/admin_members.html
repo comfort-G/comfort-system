@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Members - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/admin_members.css?v=20261104-status-color-pulse">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Member Status & Tier Management</h1>
+        <p style="color: #666;">System automatically evaluates member tiers based on welfare balance, time in group, and subscription debt.</p>
+
+        <!-- Chairperson Override Control Box (Hidden by default, shown if user has chair privileges) -->
+        <div class="card" id="chair-override-card">
+            <h2>Chairperson Override Controls</h2>
+            <p style="font-size: 13px;">Manually assign or clear a custom status override for any member.</p>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <input type="text" id="override-member-id" placeholder="Member ID (e.g., MEM001)" style="padding: 8px; width: 200px; border: 1px solid #ccc; border-radius: 4px;">
+                <select id="override-status-select">
+                    <option value="">-- Clear Override (System Default) --</option>
+                    <option value="Full member / Active">Full member / Active</option>
+                    <option value="Partial member / Active">Partial member / Active</option>
+                    <option value="Probation member / Active">Probation member / Active</option>
+                    <option value="Full member / Inactive">Full member / Inactive</option>
+                </select>
+                <button type="button" id="apply-chair-override">Apply Override</button>
+            </div>
+            <div id="override-message" style="margin-top: 10px; font-weight: bold; font-size: 13px;"></div>
+        </div>
+
+        <!-- Members Table -->
+        <h2>Member Directory & Status Report</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Member ID</th>
+                    <th>Full Name</th>
+                    <th>Days in Group</th>
+                    <th>Welfare Paid (UGX)</th>
+                    <th>Welfare Balance (UGX)</th>
+                    <th>Subscription Debt</th>
+                    <th>System Auto Status</th>
+                    <th>Final Active Status</th>
+                    <th>Profile</th>
+                </tr>
+            </thead>
+            <tbody id="members-table-body">
+                <tr>
+                    <td colspan="8" style="text-align: center;">Loading member statuses...</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="message"></div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/admin_members.js?v=20261104-status-color-pulse"></script>
+{% endblock %}

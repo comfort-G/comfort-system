@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+
+{% block title %}Home Dashboard - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/index.css?v=20261104-status-color-pulse">
+{% endblock %}
+
+{% block content %}
+<main id="home-dashboard"
+      class="home-dashboard">
+    <div id="home-error" class="home-error" role="alert" hidden></div>
+    <aside id="executive-reminder" class="executive-reminder" hidden>
+        <button
+            type="button"
+            id="executive-reminder-toggle"
+            class="executive-reminder-toggle"
+            aria-expanded="false"
+            aria-controls="executive-reminder-panel">
+            <span class="executive-reminder-icon" aria-hidden="true">!</span>
+            <span>Executive actions</span>
+            <span id="executive-reminder-count" class="executive-reminder-count">0</span>
+        </button>
+        <section
+            id="executive-reminder-panel"
+            class="executive-reminder-panel"
+            aria-labelledby="executive-reminder-heading"
+            hidden>
+            <div class="executive-reminder-panel-heading">
+                <div>
+                    <p class="eyebrow">Action required</p>
+                    <h2 id="executive-reminder-heading">Executive reminders</h2>
+                </div>
+                <button type="button" id="executive-reminder-refresh" class="executive-reminder-refresh">
+                    Refresh
+                </button>
+            </div>
+            <p id="executive-reminder-status" class="executive-reminder-status" role="status" aria-live="polite">
+                Checking your action queues...
+            </p>
+            <ul id="executive-reminder-list" class="executive-reminder-list"></ul>
+        </section>
+    </aside>
+
+    <header class="identity-banner">
+        <div class="identity-avatar" id="profile-avatar" aria-hidden="true">
+            <span id="profile-avatar-initials">--</span>
+            <img id="profile-avatar-image" alt="" hidden>
+        </div>
+        <div class="identity-copy">
+            <p class="eyebrow">Comfort Portal <span aria-hidden="true">•</span> CBO Workspace</p>
+            <h1 id="welcome-heading">Welcome back!</h1>
+            <div class="identity-meta">
+                <span id="profile-role">Loading role...</span>
+                <span class="membership-tier" id="profile-tier">Loading membership...</span>
+            </div>
+        </div>
+        <div class="identity-status">
+            <span id="activity-status" class="activity-pill is-unknown" aria-live="polite">
+                <span class="activity-dot" aria-hidden="true"></span>
+                <span id="activity-status-text">Checking account activity</span>
+            </span>
+            <div class="identity-savings">
+                <span>Current savings</span>
+                <strong id="current-savings">Loading...</strong>
+            </div>
+        </div>
+    </header>
+
+    <div class="home-layout-grid">
+        <div class="home-main-column">
+            <section class="home-panel announcements-panel announcements-hero" aria-labelledby="announcements-heading">
+                <div class="announcement-layout">
+                    <div class="announcement-copy">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="eyebrow">Comfort Group updates</p>
+                                <h2 id="announcements-heading">Announcements</h2>
+                            </div>
+                            <div class="carousel-controls" id="announcement-controls" hidden>
+                                <button type="button" id="announcement-previous" aria-label="Previous announcement">‹</button>
+                                <span id="announcement-position" aria-live="polite"></span>
+                                <button type="button" id="announcement-next" aria-label="Next announcement">›</button>
+                            </div>
+                        </div>
+                        <article id="current-announcement" class="announcement-card" aria-live="polite">
+                            <h3>Welcome</h3>
+                            <p class="announcement-content">
+                                Welcome to the Comfort Group System, where you will get all you need to know about Comfort Group.
+                            </p>
+                        </article>
+                        <details class="home-expander" id="announcement-history">
+                            <summary>View announcement history</summary>
+                            <div id="announcement-history-list" class="announcement-history-list"></div>
+                        </details>
+                    </div>
+                    <div class="announcement-globe">
+                        <svg viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="announcement-globe-title announcement-globe-description">
+                            <title id="announcement-globe-title">Rotating globe</title>
+                            <desc id="announcement-globe-description">A glossy green sphere with subtle curved grid lines, rotating continuously.</desc>
+                            <defs>
+                                <radialGradient id="globe-ocean" cx="32%" cy="24%" r="78%">
+                                    <stop offset="0" stop-color="#baf79c"/>
+                                    <stop offset=".3" stop-color="#72d778"/>
+                                    <stop offset=".67" stop-color="#2aa65d"/>
+                                    <stop offset="1" stop-color="#07533e"/>
+                                </radialGradient>
+                                <radialGradient id="globe-shine" cx="30%" cy="22%" r="76%">
+                                    <stop offset="0" stop-color="#fff" stop-opacity=".34"/>
+                                    <stop offset=".38" stop-color="#baffb5" stop-opacity=".12"/>
+                                    <stop offset="1" stop-color="#002e25" stop-opacity=".38"/>
+                                </radialGradient>
+                                <linearGradient id="globe-land" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0" stop-color="#d5f7a8"/>
+                                    <stop offset="1" stop-color="#79cb70"/>
+                                </linearGradient>
+                                <clipPath id="globe-clip">
+                                    <circle cx="250" cy="250" r="205"/>
+                                </clipPath>
+                                <filter id="globe-shadow" x="-30%" y="-30%" width="160%" height="170%">
+                                    <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#001e17" flood-opacity=".48"/>
+                                </filter>
+                            </defs>
+                            <g class="globe-ball" filter="url(#globe-shadow)">
+                                <circle cx="250" cy="250" r="205" fill="url(#globe-ocean)"/>
+                                <g clip-path="url(#globe-clip)">
+                                    <g class="globe-world" fill="none">
+                                        <g class="globe-continents" fill="url(#globe-land)" fill-opacity=".92" stroke="#e5ffc7" stroke-opacity=".48" stroke-width="1.5" stroke-linejoin="round">
+                                            <path d="m88 137 10-18 17-8 9-17 20-7 12-14 18 2 12 11 17 2 12 15 15 7 9 15-7 14-14 5-7 15-16 5-6 15-14 8-7 15-14-2-9-13-15-5-8-13-16-2-9-12-13-3-7-13-12-4z"/>
+                                            <path d="m166 205 16-8 14 7 7 14 12 9 7 16-8 13-9 20-7 21-10 18-3 22-10 19-9-9-2-19-8-13-1-18-9-13-2-17-10-12 5-15-5-13 9-12z"/>
+                                            <path d="m235 133 14-10 16 3 10 9 16-4 14 8 15-2 14 10 18-1 13 10 18 3 12 12 18 6 5 13-13 8-18-3-9 10-17 1-12 13-15-1-11-11-14 3-10-9-15 4-10-7-14 3-9-10-14 2-9-10-13-2-8-12-14-4z"/>
+                                            <path d="m254 193 16-8 17 6 11 12 14 5 8 17-4 16 7 14-8 20-12 12-5 20-12 18-9 22-12 11-11-9-3-17-10-13-4-18-10-13 4-18 8-14-3-14 10-15z"/>
+                                            <path d="m356 308 13-7 17 4 12 11 14 5 8 14-9 11-16 3-13-7-14 1-12-9-14-2-5-12z"/>
+                                            <path d="m396 220 7-5 7 5-2 9-7 3-6-5z"/>
+                                        </g>
+                                        <g class="globe-grid">
+                                            <ellipse cx="250" cy="250" rx="198" ry="72"/>
+                                            <ellipse cx="250" cy="250" rx="198" ry="142"/>
+                                            <ellipse cx="250" cy="250" rx="148" ry="202"/>
+                                            <ellipse cx="250" cy="250" rx="76" ry="202"/>
+                                            <path d="M48 250h404M66 177c112 39 256 39 368 0M66 323c112-39 256-39 368 0"/>
+                                        </g>
+                                    </g>
+                                    <circle cx="250" cy="250" r="205" fill="url(#globe-shine)"/>
+                                    <ellipse cx="184" cy="126" rx="78" ry="34" fill="#fff" opacity=".12" transform="rotate(-27 184 126)"/>
+                                </g>
+                                <circle cx="250" cy="250" r="204" fill="none" stroke="#c6ffad" stroke-opacity=".35" stroke-width="1.5"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <section class="home-panel gallery-panel" aria-labelledby="home-gallery-heading">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Comfort Group in action</p>
+                        <h2 id="home-gallery-heading">Community Gallery</h2>
+                    </div>
+                    <div class="gallery-heading-actions">
+                        <div class="carousel-controls" id="gallery-controls" hidden>
+                            <button type="button" id="gallery-previous" aria-label="Previous image">‹</button>
+                            <span id="gallery-position" aria-live="polite"></span>
+                            <button type="button" id="gallery-next" aria-label="Next image">›</button>
+                        </div>
+                        <button type="button" class="gallery-view-all" id="gallery-view-all" hidden>View all</button>
+                    </div>
+                </div>
+                <div class="home-gallery-frame" id="home-gallery-slide" aria-live="polite" hidden>
+                    <img id="home-gallery-image" src="" alt="">
+                </div>
+                <div id="home-gallery-grid" class="home-gallery-grid" aria-live="polite" hidden></div>
+                <div class="home-gallery-frame" id="home-gallery-empty">
+                    <img src="/static/images/cbo.jpeg" alt="Comfort Group community">
+                </div>
+            </section>
+
+            <section class="action-desks" aria-labelledby="action-desks-heading">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Your money, at a glance</p>
+                        <h2 id="action-desks-heading">Action desks</h2>
+                    </div>
+                </div>
+                <div class="desk-grid">
+                    <a class="desk-card" href="/api/subscriptions/view">
+                        <span class="desk-kicker">01 / Member ledger</span>
+                        <h3>Subscriptions &amp; Ledger</h3>
+                        <p>Review your contributions, payment proofs, and monthly target.</p>
+                        <dl class="desk-stats">
+                            <div><dt>Total contributions</dt><dd id="total-contributions">Loading...</dd></div>
+                            <div><dt>Welfare reserve balance</dt><dd id="member-welfare">Loading...</dd></div>
+                            <div><dt>Pending items</dt><dd id="pending-subscriptions">Loading...</dd></div>
+                            <div class="arrears-stat"><dt>Subscription arrears</dt><dd id="subscription-arrears">Loading...</dd></div>
+                        </dl>
+                        <span class="desk-link">Open ledger <span aria-hidden="true">→</span></span>
+                    </a>
+                    <a class="desk-card" href="/api/loans/view">
+                        <span class="desk-kicker">02 / Credit</span>
+                        <h3>Loans &amp; Credit</h3>
+                        <p>Check your current balance and loan review status.</p>
+                        <dl class="desk-stats">
+                            <div><dt>Outstanding balance</dt><dd id="loan-balance">Loading...</dd></div>
+                            <div><dt>Loan status</dt><dd id="loan-status">Loading...</dd></div>
+                            <div><dt>Next due date</dt><dd id="loan-due-date">Loading...</dd></div>
+                            <div><dt>Reconciliation</dt><dd id="loan-reconciliation">Loading...</dd></div>
+                        </dl>
+                        <span class="desk-link">Open loans <span aria-hidden="true">→</span></span>
+                    </a>
+                    <a class="desk-card sharing-card" href="/api/sharing/view">
+                        <span class="desk-kicker">03 / Annual distribution</span>
+                        <h3>Sharing &amp; Dividends</h3>
+                        <p id="sharing-overview">Year-end sharing information will appear here.</p>
+                        <span class="desk-link">View sharing <span aria-hidden="true">→</span></span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="home-panel membership-panel" aria-labelledby="membership-heading">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">The people behind the community</p>
+                        <h2 id="membership-heading">Membership summary</h2>
+                    </div>
+                </div>
+                <div class="membership-counts">
+                    <div><span>Total members</span><strong id="member-count-total">Loading...</strong></div>
+                    <div><span>Active</span><strong id="member-count-active">Loading...</strong></div>
+                    <div><span>Inactive</span><strong id="member-count-inactive">Loading...</strong></div>
+                </div>
+                <div class="membership-lists">
+                    <details class="home-expander">
+                        <summary>Active member list</summary>
+                        <ul id="active-member-list" class="member-list"></ul>
+                    </details>
+                    <details class="home-expander">
+                        <summary>Inactive members &amp; required actions</summary>
+                        <ul id="inactive-member-list" class="member-list"></ul>
+                    </details>
+                </div>
+            </section>
+        </div>
+        <aside class="home-side-column">
+            <section id="global-financial-panel"
+                     class="home-panel global-financial-panel"
+                     aria-labelledby="global-financial-heading"
+                     hidden>
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Executive overview</p>
+                        <h2 id="global-financial-heading">Global financial updates</h2>
+                    </div>
+                </div>
+                <dl class="global-financial-metrics">
+                    <div>
+                        <dt>Total paid subscriptions</dt>
+                        <dd id="global-subscription-total">Loading...</dd>
+                    </div>
+                    <div>
+                        <dt>Subscriptions collected this year</dt>
+                        <dd id="global-subscription-year">Loading...</dd>
+                    </div>
+                    <div>
+                        <dt>Welfare account balance</dt>
+                        <dd id="global-welfare-total">Loading...</dd>
+                    </div>
+                    <div>
+                        <dt>Members' current savings (excluding welfare)</dt>
+                        <dd id="global-member-savings">Loading...</dd>
+                    </div>
+                    <div>
+                        <dt>Unpaid loan principal</dt>
+                        <dd id="global-unpaid-principal">Loading...</dd>
+                    </div>
+                    <div>
+                        <dt>Group working capital</dt>
+                        <dd id="global-working-capital">Loading...</dd>
+                    </div>
+                    <div>
+                        <dt>Running loan balance</dt>
+                        <dd id="global-loan-balance">Loading...</dd>
+                    </div>
+                    <div>
+                        <dt>Running loans</dt>
+                        <dd id="global-running-loans">Loading...</dd>
+                    </div>
+                    <div>
+                        <dt>Loan interest collected</dt>
+                        <dd id="global-interest-collected">Loading...</dd>
+                    </div>
+                </dl>
+                <p class="data-note">Group working capital is members' current savings, excluding welfare, minus unpaid loan principal. Approved loans are treated as disbursed.</p>
+                <section class="running-loans-section" aria-labelledby="running-loans-heading">
+                    <h3 id="running-loans-heading">Running loans</h3>
+                    <ul id="global-running-loan-list" class="global-running-loan-list">
+                        <li class="empty-state">Loading running loans...</li>
+                    </ul>
+                </section>
+            </section>
+        </aside>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/home.js?v=20261104-status-color-pulse"></script>
+{% endblock %}

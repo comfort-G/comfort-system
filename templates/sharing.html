@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Sharing & Dividends - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/sharing.css">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <section class="sharing-hero" aria-labelledby="sharing-hero-title">
+            <div class="sharing-hero-content">
+                <p class="sharing-hero-eyebrow">Together, we grow</p>
+                <h1 id="sharing-hero-title">Year-End Sharing &amp; Dividends</h1>
+                <p>See your savings and dividend payout, and manage your sharing withdrawal requests.</p>
+            </div>
+        </section>
+        
+        <!-- Sharing Status Alert -->
+        <div id="sharing-status-alert" class="alert-locked">
+            Loading sharing cycle status...
+        </div>
+
+        <!-- Member Dashboard Card -->
+        <div class="card">
+            <h2>My Financial Payout Summary</h2>
+            <p><strong>Available Savings After Disbursements:</strong> UGX <span id="savings-payout">0.00</span></p>
+            <p><strong>Borrower Dividend:</strong> UGX <span id="borrower-payout">0.00</span></p>
+            <p><strong>Group Dividend Share:</strong> UGX <span id="general-pool">0.00</span></p>
+            <p><strong>Available Total Sharing Payout:</strong> UGX <span id="total-payout">0.00</span></p>
+            <p id="admin-reserve-wrapper" class="hidden"><strong>Admin Cost Reserve:</strong> UGX <span id="admin-reserve">0.00</span></p>
+            <p style="font-style: italic; color: #7f8c8d;" id="welfare-note"></p>
+        </div>
+
+        <div class="card">
+            <h2>My Withdrawal Requests</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Request</th><th>Amount (UGX)</th><th>Status</th><th>Requested</th><th>Review note</th></tr>
+                    </thead>
+                    <tbody id="sharing-withdrawal-history">
+                        <tr><td colspan="5">Loading withdrawal requests...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Withdrawal Tool Section -->
+        <div id="withdrawal-section" class="card hidden">
+            <h2>Request Sharing Payout</h2>
+            <p>Request any amount up to your available total sharing payout. The Chairperson must approve it and the Treasurer records disbursement after payment.</p>
+            <input type="number" id="withdraw-amount" placeholder="Enter amount in UGX" min="0.01" step="0.01">
+            <button type="button" id="submit-withdrawal-btn">Submit Withdrawal Request</button>
+        </div>
+        
+        <div id="message"></div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/sharing.js?v=20261104-insufficient-payout-message"></script>
+{% endblock %}

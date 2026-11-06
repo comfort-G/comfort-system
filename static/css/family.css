@@ -1,0 +1,568 @@
+.family-registry {
+    --family-ink: #173c31;
+    --family-muted: #637a70;
+    --family-green: #17694c;
+    max-width: 1180px;
+    margin: 0 auto;
+    color: var(--family-ink);
+}
+
+.family-hero {
+    position: relative;
+    display: grid;
+    min-height: 330px;
+    grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+    align-items: center;
+    overflow: hidden;
+    margin: 0 0 28px;
+    padding: clamp(30px, 5vw, 58px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    color: #fff;
+    background:
+        linear-gradient(118deg, rgba(18, 59, 48, 0.88) 0%, rgba(21, 84, 62, 0.76) 57%, rgba(27, 101, 72, 0.64) 100%),
+        url("../images/family.JPG") center / cover no-repeat;
+    box-shadow: 0 18px 42px rgba(21, 67, 49, 0.17);
+}
+
+.family-hero::before,
+.family-hero::after {
+    position: absolute;
+    z-index: 0;
+    border: 1px solid rgba(226, 249, 235, 0.12);
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
+}
+
+.family-hero::before {
+    top: -210px;
+    right: 12%;
+    width: 430px;
+    height: 430px;
+}
+
+.family-hero::after {
+    right: -165px;
+    bottom: -290px;
+    width: 510px;
+    height: 510px;
+}
+
+.family-hero-copy,
+.family-hero-art {
+    position: relative;
+    z-index: 1;
+}
+
+.family-hero-copy {
+    max-width: 590px;
+}
+
+.family-hero-eyebrow {
+    margin: 0 0 13px;
+    color: #b8e3c9;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.family-hero h1 {
+    max-width: 560px;
+    margin: 0;
+    color: #fff;
+    font-size: clamp(34px, 5vw, 56px);
+    font-weight: 750;
+    letter-spacing: -0.045em;
+    line-height: 1.04;
+}
+
+.family-hero-description {
+    max-width: 495px;
+    margin: 17px 0 25px;
+    color: #e0efe6;
+    font-size: clamp(14px, 1.5vw, 16px);
+    line-height: 1.7;
+}
+
+.family-hero-action {
+    display: inline-flex;
+    min-height: 46px;
+    align-items: center;
+    gap: 12px;
+    padding: 0 18px;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 999px;
+    color: #174432;
+    background: #f7fff9;
+    box-shadow: 0 8px 20px rgba(7, 37, 24, 0.16);
+    font-size: 14px;
+    font-weight: 750;
+    text-decoration: none;
+    transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.family-hero-action:hover {
+    transform: translateY(-2px);
+    background: #e9f8ee;
+    box-shadow: 0 12px 24px rgba(7, 37, 24, 0.22);
+}
+
+.family-hero-action:focus-visible {
+    outline: 3px solid #f4d28a;
+    outline-offset: 4px;
+}
+
+.family-hero-action svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
+.family-hero-art {
+    width: min(100%, 410px);
+    height: 280px;
+    justify-self: end;
+}
+
+.family-hero-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid rgba(219, 246, 228, 0.22);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.family-hero-orbit-one {
+    width: 242px;
+    height: 242px;
+}
+
+.family-hero-orbit-two {
+    width: 330px;
+    height: 330px;
+    border-style: dashed;
+    opacity: 0.55;
+}
+
+.family-hero-connection {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 112px;
+    height: 1px;
+    transform-origin: left center;
+    background: rgba(215, 244, 224, 0.44);
+}
+
+.family-hero-connection-one {
+    transform: rotate(-35deg);
+}
+
+.family-hero-connection-two {
+    transform: rotate(35deg);
+}
+
+.family-hero-connection-three {
+    width: 100px;
+    transform: rotate(180deg);
+}
+
+.family-hero-person {
+    position: absolute;
+    z-index: 1;
+    display: grid;
+    width: 64px;
+    height: 64px;
+    align-content: center;
+    justify-items: center;
+    gap: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 21px;
+    background: linear-gradient(145deg, #f8fff8, #dcefe1);
+    box-shadow: 0 10px 24px rgba(5, 37, 24, 0.22);
+    transform: rotate(-6deg);
+}
+
+.family-hero-person-head {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #c9835f;
+}
+
+.family-hero-person-body {
+    width: 32px;
+    height: 16px;
+    border-radius: 17px 17px 10px 10px;
+    background: #46856a;
+}
+
+.family-hero-person-one {
+    top: 7px;
+    left: calc(50% - 32px);
+}
+
+.family-hero-person-two {
+    top: calc(50% - 32px);
+    right: 12px;
+    transform: rotate(7deg);
+}
+
+.family-hero-person-three {
+    bottom: 7px;
+    left: calc(50% - 32px);
+    transform: rotate(5deg);
+}
+
+.family-hero-person-four {
+    top: calc(50% - 32px);
+    left: 12px;
+    transform: rotate(-8deg);
+}
+
+.family-hero-person-two .family-hero-person-head {
+    background: #8e6148;
+}
+
+.family-hero-person-two .family-hero-person-body {
+    background: #d29d57;
+}
+
+.family-hero-person-three .family-hero-person-head {
+    background: #d59b72;
+}
+
+.family-hero-person-three .family-hero-person-body {
+    background: #6a86b5;
+}
+
+.family-hero-person-four .family-hero-person-head {
+    background: #b67955;
+}
+
+.family-hero-person-four .family-hero-person-body {
+    background: #a56f85;
+}
+
+.family-hero-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    display: flex;
+    width: 148px;
+    height: 148px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 50%;
+    background: linear-gradient(145deg, #f9fff9, #e4f3e7);
+    box-shadow: 0 16px 38px rgba(5, 37, 24, 0.2);
+    transform: translate(-50%, -50%);
+}
+
+.family-hero-heart {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 8px;
+    place-items: center;
+    border-radius: 15px;
+    color: #fff;
+    background: #2c8058;
+}
+
+.family-hero-heart svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
+.family-hero-center-label {
+    color: #28523e;
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 0.11em;
+}
+
+.family-hero-center-caption {
+    margin-top: 3px;
+    color: #718579;
+    font-size: 10px;
+}
+
+.family-hero-spark {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #f1d58f;
+    box-shadow: 0 0 15px rgba(241, 213, 143, 0.7);
+}
+
+.family-hero-spark-one {
+    top: 35px;
+    right: 56px;
+}
+
+.family-hero-spark-two {
+    bottom: 36px;
+    left: 47px;
+    width: 5px;
+    height: 5px;
+}
+
+.family-hero-spark-three {
+    top: 48%;
+    right: 1px;
+    width: 4px;
+    height: 4px;
+}
+
+.family-card {
+    margin-bottom: 24px;
+    padding: 24px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.family-card h2 {
+    margin: 0 0 20px;
+    color: #2c3e50;
+    font-size: 20px;
+}
+
+.family-welfare-guidance {
+    max-width: 760px;
+    margin: -8px 0 20px;
+    color: var(--family-muted);
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.family-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.family-form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #34495e;
+    font-weight: 600;
+}
+
+.family-form-group input,
+.family-form-group select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #ccd2d8;
+    border-radius: 5px;
+    background: #fff;
+    color: #333;
+    font: inherit;
+}
+
+.family-form-group input:focus,
+.family-form-group select:focus {
+    border-color: #3498db;
+    outline: 2px solid rgba(52, 152, 219, 0.18);
+}
+
+.family-form-actions,
+.family-row-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.family-form-actions {
+    margin-top: 18px;
+}
+
+.family-form-actions button,
+.family-row-actions button {
+    padding: 9px 14px;
+    border: 0;
+    border-radius: 5px;
+    background: #3498db;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.family-form-actions button:hover,
+.family-row-actions button:hover {
+    background: #2980b9;
+}
+
+.family-form-actions .family-secondary-button,
+.family-row-actions .family-secondary-button {
+    background: #667085;
+}
+
+.family-row-actions .family-delete-button {
+    background: #c0392b;
+}
+
+.family-row-actions .family-delete-button:hover {
+    background: #a93226;
+}
+
+.family-table-wrap {
+    overflow-x: auto;
+}
+
+.family-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.family-table th,
+.family-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e4e7ec;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.family-table th {
+    background: #2c3e50;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.family-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.family-registry-heading td {
+    background: #edf4fa;
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+.family-registry-heading .family-row-actions,
+.family-registry-heading button {
+    margin-left: 10px;
+}
+
+.family-registry-heading button {
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 4px;
+    background: #3498db;
+    color: #fff;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.family-registry-heading button:hover {
+    background: #2980b9;
+}
+
+.family-form-group select:disabled {
+    background: #f2f4f7;
+    color: #667085;
+    cursor: not-allowed;
+}
+
+.family-empty-state {
+    padding: 24px !important;
+    color: #667085;
+    text-align: center !important;
+}
+
+.family-message {
+    min-height: 1.2em;
+    margin: 12px 0 0;
+    color: #237a45;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.family-message-error {
+    color: #c0392b;
+}
+
+@media (max-width: 700px) {
+    .family-hero {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 30px 24px 12px;
+        border-radius: 19px;
+    }
+
+    .family-hero h1 {
+        max-width: 470px;
+    }
+
+    .family-hero-description {
+        margin: 14px 0 20px;
+    }
+
+    .family-hero-art {
+        width: min(100%, 340px);
+        height: 230px;
+        justify-self: center;
+        transform: scale(0.9);
+        transform-origin: center top;
+        margin-bottom: -18px;
+    }
+
+    .family-hero-orbit-one {
+        width: 204px;
+        height: 204px;
+    }
+
+    .family-hero-orbit-two {
+        width: 280px;
+        height: 280px;
+    }
+
+    .family-hero-person-one,
+    .family-hero-person-three {
+        left: calc(50% - 32px);
+    }
+
+    .family-hero-person-two {
+        right: 10px;
+    }
+
+    .family-hero-person-four {
+        left: 10px;
+    }
+
+    .family-hero-center {
+        width: 132px;
+        height: 132px;
+    }
+
+    .family-card {
+        padding: 18px;
+    }
+
+    .family-form-grid {
+        grid-template-columns: 1fr;
+    }
+}

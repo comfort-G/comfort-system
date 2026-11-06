@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Loans - Comfort Group Portal{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/loans.css?v=20261030-loan-eligibility-review">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <header class="loans-hero">
+            <div class="loans-hero-copy">
+                <p class="loans-hero-eyebrow">Plan well · Borrow responsibly</p>
+                <h1>Loans &amp; Financial Growth</h1>
+                <p>Access credit with confidence. Review your loan status, understand your balance, and submit an application when you are ready.</p>
+                <div class="loans-hero-highlights" aria-label="Loan terms">
+                    <span>Up to UGX 300,000</span>
+                    <span>10% monthly interest</span>
+                </div>
+            </div>
+            <div class="loans-hero-emblem" aria-hidden="true">
+                <span class="loan-orbit loan-orbit-one"></span>
+                <span class="loan-orbit loan-orbit-two"></span>
+                <span class="loan-emblem-center">UGX</span>
+                <span class="loan-emblem-dot"></span>
+            </div>
+        </header>
+        
+        <!-- Active Loan Snapshot Card -->
+        <div class="card" id="active-loan-card">
+            <h2>Active / Pending Loan Snapshot</h2>
+            <div id="snapshot-content">Loading loan status...</div>
+        </div>
+
+        <!-- Loan Application Form -->
+        <div class="card" style="border-left-color: #27ae60;">
+            <h2>Apply for a New Loan</h2>
+            <p style="font-size: 13px; color: #666;">Maximum limit: UGX 300,000 | Monthly Interest: 10%</p>
+            <form id="loan-form">
+                <div class="form-group">
+                    <label for="amount">Requested Amount (UGX)</label>
+                    <input type="number" id="amount" required min="1" max="300000" placeholder="e.g. 200000">
+                </div>
+                <div class="form-group">
+                    <label for="mobile-money-number">Registered Mobile Money Number</label>
+                    <input
+                        type="tel"
+                        id="mobile-money-number"
+                        name="mobile_money_number"
+                        required
+                        minlength="9"
+                        maxlength="24"
+                        autocomplete="tel"
+                        inputmode="tel"
+                        placeholder="e.g. 07XXXXXXXX or +2567XXXXXXXX"
+                        aria-describedby="loan-fee-note"
+                    >
+                    <small id="loan-fee-note" class="loan-fee-note">
+                        Mobile Money transaction charges will be deducted directly from the
+                        amount you apply for, so the amount received will be lower.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="purpose">Loan Purpose</label>
+                    <textarea id="purpose" required placeholder="State reason for loan..."></textarea>
+                </div>
+                <p class="loan-eligibility-note">
+                    Eligibility: your account must be active, subscription arrears must not
+                    exceed UGX 50,000 unless the Chairperson has set an active status override,
+                    and you must not have a pending or active loan. Applications await review
+                    by an executive before approval or disbursement.
+                </p>
+                <button type="submit">Submit Application</button>
+            </form>
+            <div id="message"></div>
+        </div>
+
+        <!-- Loan History Table -->
+        <h2>Loan History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Applied Date</th>
+                    <th>Requested (UGX)</th>
+                    <th>Outstanding Balance</th>
+                    <th>Mobile Money Number</th>
+                    <th>Purpose</th>
+                    <th>Status</th>
+                    <th>Decision / eligibility reason</th>
+                </tr>
+            </thead>
+            <tbody id="loan-history-body">
+                <tr>
+                    <td colspan="7" style="text-align: center;">Loading loan history...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/loans.js?v=20261103-safe-api-json"></script>
+{% endblock %}
