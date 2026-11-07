@@ -74,7 +74,7 @@ body {
 }
 
 .sidebar-title-system {
-    text-align: center;
+    text-align: left;
     text-decoration: underline;
     text-decoration-style: solid;
     text-underline-offset: 3px;
