@@ -155,7 +155,11 @@ function getCollapsibleLabel(target) {
 }
 
 function addCollapseControl(target, type) {
-    if (!target || target.dataset.collapseControl === 'true') return;
+    if (
+        !target
+        || target.dataset.collapseControl === 'true'
+        || target.hasAttribute('data-no-auto-collapse')
+    ) return;
 
     const label = getCollapsibleLabel(target);
     target.classList.add('collapsible-sheet-content');
