@@ -2,6 +2,16 @@ const loginForm = document.getElementById('login-form');
 const forgotPasswordToggle = document.getElementById('forgot-password-toggle');
 const forgotPasswordPanel = document.getElementById('forgot-password-panel');
 const forgotPasswordForm = document.getElementById('forgot-password-form');
+const passwordField = document.getElementById('password');
+const passwordVisibilityToggle = document.getElementById('password-visibility-toggle');
+
+passwordVisibilityToggle?.addEventListener('click', () => {
+    if (!passwordField) return;
+    const isPasswordVisible = passwordField.type === 'text';
+    passwordField.type = isPasswordVisible ? 'password' : 'text';
+    passwordVisibilityToggle.textContent = isPasswordVisible ? 'Show' : 'Hide';
+    passwordVisibilityToggle.setAttribute('aria-pressed', String(!isPasswordVisible));
+});
 
 forgotPasswordToggle?.addEventListener('click', () => {
     if (!forgotPasswordPanel) return;

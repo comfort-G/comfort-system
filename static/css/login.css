@@ -119,6 +119,32 @@ input[type="tel"] {
     box-sizing: border-box;
 }
 
+.password-field {
+    position: relative;
+}
+
+.password-field input.password-input {
+    padding-right: 72px;
+}
+
+.password-visibility-toggle {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    width: auto;
+    padding: 6px 8px;
+    transform: translateY(-50%);
+    color: #2672a8;
+    background: transparent;
+    font-size: 14px;
+}
+
+.password-visibility-toggle:hover {
+    color: #1d5d8a;
+    background: transparent;
+    text-decoration: underline;
+}
+
 input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="tel"]:focus {

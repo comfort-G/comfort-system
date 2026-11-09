@@ -3,7 +3,7 @@
 {% block title %}Login - Comfort Group Portal{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="/static/css/login.css?v=20261104-login-cleanup">
+<link rel="stylesheet" href="/static/css/login.css?v=20261109-show-password">
 {% endblock %}
 
 {% block sidebar %}{% endblock %}
@@ -28,7 +28,14 @@
                     
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" id="password" required placeholder="Enter password" autocomplete="current-password">
+                        <div class="password-field">
+                            <input class="password-input" type="password" id="password" required
+                                   placeholder="Enter password" autocomplete="current-password">
+                            <button type="button" class="password-visibility-toggle" id="password-visibility-toggle"
+                                    aria-controls="password" aria-pressed="false">
+                                Show
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit">Sign In</button>
@@ -60,5 +67,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="/static/js/login.js?v=20261105-password-reset-email"></script>
+<script src="/static/js/login.js?v=20261109-show-password"></script>
 {% endblock %}
