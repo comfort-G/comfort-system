@@ -230,7 +230,7 @@ def delete_welfare_transfer(
         acquire_financial_action_lock(cursor)
         cursor.execute(
             """
-            SELECT member_id
+            SELECT member_id, created_by_role
             FROM public.member_welfare_contributions
             WHERE id = %s;
             """,
@@ -249,7 +249,7 @@ def delete_welfare_transfer(
 
         cursor.execute(
             """
-            SELECT id, member_id, amount, transfer_reference
+            SELECT id, member_id, amount, transfer_reference, created_by_role
             FROM public.member_welfare_contributions
             WHERE id = %s
             FOR UPDATE;
@@ -259,6 +259,8 @@ def delete_welfare_transfer(
         transfer = cursor.fetchone()
         if not transfer:
             return None
+        if transfer["created_by_role"] == "System":
+            return {"error": "automatic_transfer"}
 
         cursor.execute(
             """

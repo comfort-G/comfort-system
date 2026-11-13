@@ -15,6 +15,7 @@ from starlette.concurrency import run_in_threadpool
 from app.database import init_db_pool, close_db_pool, get_db
 from app.limiter import limiter
 from app.repositories import loan_repo
+from app.repositories import welfare_refill_repo
 from app.routers import auth
 from app.routers import subscriptions
 from app.routers import loans
@@ -51,20 +52,63 @@ async def _run_loan_interest_scheduler() -> None:
         await asyncio.sleep(60)
 
 
+async def _run_welfare_refill_scheduler() -> None:
+    while True:
+        try:
+            top_ups = await run_in_threadpool(
+                welfare_refill_repo.top_up_existing_welfare_balances
+            )
+            result = await run_in_threadpool(
+                welfare_refill_repo.process_due_welfare_refills
+            )
+            transfer_count = top_ups["transfer_count"] + result["transfer_count"]
+            if transfer_count:
+                logger.info(
+                    "Automatically refilled welfare accounts for %s member(s); "
+                    "total transferred from savings: UGX %s.",
+                    top_ups["member_count"] + result["member_count"],
+                    top_ups["amount"] + result["amount"],
+                )
+        except Exception:
+            logger.exception("Automatic welfare-account refill failed.")
+        await asyncio.sleep(60)
+
+
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     # Startup: Initialize DB Pool
     init_db_pool()
+    initial_top_up = await run_in_threadpool(
+        welfare_refill_repo.top_up_existing_welfare_balances
+    )
+    while initial_top_up["has_more"]:
+        initial_top_up = await run_in_threadpool(
+            welfare_refill_repo.top_up_existing_welfare_balances
+        )
+    if initial_top_up["transfer_count"]:
+        logger.info(
+            "Startup welfare sweep transferred UGX %s from savings for %s member(s).",
+            initial_top_up["amount"],
+            initial_top_up["member_count"],
+        )
     interest_scheduler = asyncio.create_task(_run_loan_interest_scheduler())
+    welfare_refill_scheduler = asyncio.create_task(
+        _run_welfare_refill_scheduler()
+    )
     try:
         yield
     finally:
         interest_scheduler.cancel()
+        welfare_refill_scheduler.cancel()
         try:
             await interest_scheduler
         except asyncio.CancelledError:
             pass
-        # Shutdown: Close DB Pool
+        try:
+            await welfare_refill_scheduler
+        except asyncio.CancelledError:
+            pass
+        # Shutdown: Close DB pool
         close_db_pool()
 
 app = FastAPI(

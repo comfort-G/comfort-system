@@ -92,6 +92,10 @@ def delete_welfare_transfer(
         raise ValueError("Welfare transfer record not found.")
     if result.get("error") == "member_not_found":
         raise ValueError("Member profile not found.")
+    if result.get("error") == "automatic_transfer":
+        raise ValueError(
+            "Automatic welfare refills cannot be deleted from the transfer ledger."
+        )
     transfer = result["transfer"]
     return {
         "status": "success",

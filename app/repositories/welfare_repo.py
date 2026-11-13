@@ -623,9 +623,13 @@ def disburse_welfare_claim(
                 """
                 INSERT INTO public.welfare_request_member_contributions (
                     request_id, member_id, target_amount, welfare_amount,
-                    savings_amount, outstanding_amount, is_exempt
+                    savings_amount, outstanding_amount, is_exempt,
+                    auto_refill_due_at
                 )
-                VALUES (%s, %s, %s, %s, %s, %s, %s);
+                VALUES (
+                    %s, %s, %s, %s, %s, %s, %s,
+                    CASE WHEN %s > 0 THEN NOW() + INTERVAL '24 hours' END
+                );
                 """,
                 [
                     (
@@ -636,6 +640,7 @@ def disburse_welfare_claim(
                         row["savings_amount"],
                         row["outstanding_amount"],
                         row["is_exempt"],
+                        row["welfare_amount"],
                     )
                     for row in contribution_rows
                 ],
@@ -795,8 +800,17 @@ def disburse_welfare_claim(
             personal_message = (
                 f"Your UGX {row['welfare_amount']:,.2f} welfare balance and "
                 f"UGX {row['savings_amount']:,.2f} savings were applied to welfare "
-                f"case {claim['case_number']}."
+                f"case {claim['case_number']} for "
+                f"{claim['support_category']} support for "
+                f"{claim['beneficiary_relationship']} {claim['beneficiary_name']}."
             )
+            if row["welfare_amount"] > 0:
+                personal_message += (
+                    " The welfare deduction is scheduled to be replenished from "
+                    "your available savings after 24 hours; any savings you add "
+                    "before then will transfer immediately toward the UGX 100,000 "
+                    "welfare-account maximum."
+                )
             if row["outstanding_amount"] > 0:
                 personal_message += (
                     f" UGX {row['outstanding_amount']:,.2f} of your UGX "

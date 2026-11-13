@@ -373,6 +373,9 @@ def init_db_pool():
                         outstanding_amount NUMERIC(12, 2) NOT NULL DEFAULT 0
                             CHECK (outstanding_amount >= 0),
                         is_exempt BOOLEAN NOT NULL DEFAULT FALSE,
+                        auto_refill_due_at TIMESTAMP WITHOUT TIME ZONE,
+                        auto_refilled_amount NUMERIC(12, 2) NOT NULL DEFAULT 0
+                            CHECK (auto_refilled_amount >= 0),
                         created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
                         UNIQUE (request_id, member_id),
                         CONSTRAINT welfare_member_contribution_amounts_check CHECK (
@@ -386,6 +389,12 @@ def init_db_pool():
                     );
                     ALTER TABLE public.welfare_request_member_contributions
                         ADD COLUMN IF NOT EXISTS is_exempt BOOLEAN NOT NULL DEFAULT FALSE;
+                    ALTER TABLE public.welfare_request_member_contributions
+                        ADD COLUMN IF NOT EXISTS auto_refill_due_at
+                            TIMESTAMP WITHOUT TIME ZONE,
+                        ADD COLUMN IF NOT EXISTS auto_refilled_amount
+                            NUMERIC(12, 2) NOT NULL DEFAULT 0
+                                CHECK (auto_refilled_amount >= 0);
                     ALTER TABLE public.welfare_request_member_contributions
                         DROP CONSTRAINT IF EXISTS welfare_request_member_contributions_target_amount_check;
                     ALTER TABLE public.welfare_request_member_contributions
@@ -413,6 +422,12 @@ def init_db_pool():
                     END $$;
                     CREATE INDEX IF NOT EXISTS welfare_request_member_contrib_member_idx
                         ON public.welfare_request_member_contributions (member_id, created_at);
+                    CREATE INDEX IF NOT EXISTS welfare_member_contribution_refill_due_idx
+                        ON public.welfare_request_member_contributions (
+                            auto_refill_due_at, member_id
+                        )
+                        WHERE auto_refill_due_at IS NOT NULL
+                          AND auto_refilled_amount < welfare_amount;
 
                     CREATE TABLE IF NOT EXISTS public.welfare_request_member_arrears_payments (
                         id BIGSERIAL PRIMARY KEY,

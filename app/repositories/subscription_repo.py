@@ -6,6 +6,7 @@ from typing import Any
 
 from app.database import get_db
 from app.subscription_allocation import allocate_subscription_payment, month_start
+from app.repositories.welfare_refill_repo import top_up_welfare_from_savings
 
 def get_subscriptions_by_member_str(member_str_id: str):
     """Fetches a member's monthly subscription history and paid totals."""
@@ -288,6 +289,7 @@ def _apply_subscription_allocations(
             )
             subscription_id = cursor.fetchone()["id"]
         subscription_ids.append(subscription_id)
+    top_up_welfare_from_savings(cursor, member_id)
     return subscription_ids
 
 
